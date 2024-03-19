@@ -1,4 +1,6 @@
-﻿namespace Avans_DevOps.Models
+﻿using Avans_DevOps.Items;
+
+namespace Avans_DevOps.Models
 {
     public class Backlog
     {
@@ -12,9 +14,16 @@
         public void Add(Item item) { 
             _items.Add(item);
         }
+
         public void Remove(Item item) { 
             _items.Remove(item);
         }
+
+        public IList<Item> GetItems()
+        {
+            return _items;
+        }
+
         public void Clear(){
             _items.Clear();
         }

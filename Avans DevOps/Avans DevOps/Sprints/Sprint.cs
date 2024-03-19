@@ -1,4 +1,5 @@
-﻿using Avans_DevOps.Models;
+﻿using Avans_DevOps.Items;
+using Avans_DevOps.Models;
 using Avans_DevOps.Sprints.SprintStates;
 
 namespace Avans_DevOps.Sprints
@@ -23,6 +24,7 @@ namespace Avans_DevOps.Sprints
         public void ChangeState(ISprintState state)
         {
             this._sprintState = state;
+            this._sprintState.OnEnter();
         }
 
         //Gaat naar de volgende state.

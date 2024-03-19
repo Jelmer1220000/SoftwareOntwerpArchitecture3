@@ -1,4 +1,4 @@
-﻿using Avans_DevOps.Models;
+﻿using Avans_DevOps.Items;
 
 namespace Avans_DevOps.Sprints.SprintStates
 {
@@ -25,6 +25,11 @@ namespace Avans_DevOps.Sprints.SprintStates
         public void NextState()
         {
             throw new InvalidOperationException("De sprint bevind zich in de 'ClosedState' welke geen volgende state heeft.");
+        }
+
+        public void OnEnter()
+        {
+            Console.WriteLine("Sprint closed");
         }
     }
 }

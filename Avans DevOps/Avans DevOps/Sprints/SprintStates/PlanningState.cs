@@ -1,4 +1,4 @@
-﻿using Avans_DevOps.Models;
+﻿using Avans_DevOps.Items;
 
 namespace Avans_DevOps.Sprints.SprintStates
 {

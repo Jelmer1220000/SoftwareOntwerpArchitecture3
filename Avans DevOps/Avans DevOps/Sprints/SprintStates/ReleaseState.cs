@@ -1,4 +1,4 @@
-﻿using Avans_DevOps.Models;
+﻿using Avans_DevOps.Items;
 
 namespace Avans_DevOps.Sprints.SprintStates
 {
@@ -26,6 +26,9 @@ namespace Avans_DevOps.Sprints.SprintStates
             _context.ChangeState(new ClosedState(_context));
         }
 
-
+        public void OnEnter()
+        {
+           // Run pipeline
+        }
     }
 }
