@@ -1,41 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Avans_DevOps.Models
+﻿namespace Avans_DevOps.Models
 {
     public class Project
     {
         public string _Name;
 
-        private readonly TeamMembers _ProductOwner;
-        private TeamMembers? _ScrumMaster;
-        private IList<TeamMembers>? _Developers = [];
+        private readonly TeamMember _productOwner;
+        private TeamMember? _scrumMaster;
+        private IList<TeamMember> _developers;
 
 
 
-        public Project(string name, TeamMembers productOwner)
+        public Project(string name, TeamMember productOwner)
         {
             _Name = name;
-            _ProductOwner = productOwner;
+            _productOwner = productOwner;
+            _developers = [];
         }
 
 
-        public void AddDeveloper(TeamMembers developer)
+        public void AddDeveloper(TeamMember developer)
         {
-            _Developers.Add(developer);
+            _developers.Add(developer);
         }
 
-        public void SetScrumMaster(TeamMembers scrumMaster)
+        public void SetScrumMaster(TeamMember scrumMaster)
         {
-            _ScrumMaster = scrumMaster;
+            _scrumMaster = scrumMaster;
         }
 
-        public TeamMembers GetScrumMaster()
+        public TeamMember GetScrumMaster()
         {
-            return _ScrumMaster!;
+            return _scrumMaster!;
         }
     }
 }

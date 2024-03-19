@@ -1,10 +1,10 @@
 ﻿namespace Avans_DevOps.Sprints
 {
-    public class ReleaseSprint : Sprint
+    public class ReviewSprint : Sprint
     {
         public override void NextSprintState()
         {
-            this._sprintState.NextState();
+            this.NextSprintState();
         }
     }
 }

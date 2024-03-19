@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Avans_DevOps.Models;
+using Avans_DevOps.Sprints.SprintStates;
 
 namespace Avans_DevOps.Sprints
 {
@@ -10,6 +7,7 @@ namespace Avans_DevOps.Sprints
     {
 
         protected ISprintState _sprintState;
+        public Backlog _sprintBackLog;
 
         public string Name { get; set; } = "";
         public DateOnly StartDate { get; set; }
@@ -17,14 +15,22 @@ namespace Avans_DevOps.Sprints
 
         public Sprint()
         {
-          _sprintState = new PlanningState(this);
+            _sprintBackLog = new Backlog();
+            _sprintState = new PlanningState(this);
         }
 
-        public void AdvanceState(ISprintState state)
+        //Veranderd de state van de huidige context.
+        public void ChangeState(ISprintState state)
         {
             this._sprintState = state;
         }
 
+        //Gaat naar de volgende state.
         public abstract void NextSprintState();
+
+        public void AddItemToSprintBacklog(Item item)
+        {
+            _sprintBackLog.Add(item);
+        }
     }
 }

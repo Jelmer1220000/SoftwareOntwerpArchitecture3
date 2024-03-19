@@ -1,14 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Avans_DevOps.Models
+﻿namespace Avans_DevOps.Models
 {
     public class Item
     {
+        public Guid Id { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public IList<Activity> Activities { get; set; }
 
-        private IList<Activity> _Activities;
+        public Item()
+        {
+            Activities = new List<Activity>();
+        }
+
+        public void AddActivity(Activity activity)
+        {
+            Activities.Add(activity);
+        }
+
+        public void RemoveActivity(Activity activity)
+        {
+            Activities.Remove(activity);
+        }
     }
 }
