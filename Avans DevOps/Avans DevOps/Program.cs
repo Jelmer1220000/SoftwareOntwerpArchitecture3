@@ -1,2 +1,9 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿using Avans_DevOps.Sprints;
+
+ReleaseSprint sprint = new ReleaseSprint();
+
+sprint.PrintState();
+sprint.NextSprintState();
+sprint.PrintState();
+sprint.NextSprintState();
+sprint.PrintState();
