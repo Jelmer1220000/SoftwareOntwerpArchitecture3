@@ -44,8 +44,8 @@ namespace Avans_DevOps.Items
 
         public void ToReadyForTestingState()
         {
+            //TODO
             //Notificatie naar testers
-
 
            ItemState = new ReadyForTestingState(this);
         }

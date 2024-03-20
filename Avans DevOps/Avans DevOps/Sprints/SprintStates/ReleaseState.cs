@@ -18,6 +18,7 @@ namespace Avans_DevOps.Sprints.SprintStates
 
         public override void OnEnter()
         {
+            //TODO
            // Run pipeline
         }
     }

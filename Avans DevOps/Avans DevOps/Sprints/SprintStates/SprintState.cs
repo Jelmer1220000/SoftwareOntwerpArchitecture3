@@ -21,7 +21,7 @@ namespace Avans_DevOps.Sprints.SprintStates
 
         public virtual void OnEnter()
         {
-            Console.WriteLine(this.GetType().Name);
+            Console.WriteLine("Sprint entered: " + this.GetType().Name);
         }
     }
 }

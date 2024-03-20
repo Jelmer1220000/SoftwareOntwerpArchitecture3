@@ -19,6 +19,7 @@ namespace Avans_DevOps.Items.ItemStates
         {
             _context.ToTodoState();
 
+            //TODO
             //Notificatie naar Scrum Master.
         }
 
