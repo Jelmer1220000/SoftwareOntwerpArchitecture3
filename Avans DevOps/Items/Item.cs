@@ -1,6 +1,5 @@
 ﻿using Avans_DevOps.Items.ItemStates;
 using Avans_DevOps.Models;
-using Avans_DevOps.Sprints.SprintStates;
 
 namespace Avans_DevOps.Items
 {

@@ -1,25 +1,33 @@
 ﻿using Avans_DevOps.Items;
 using Avans_DevOps.Models;
-using Avans_DevOps.Sprints;
+using Avans_DevOps.Sprints.SprintFactory;
 
-ReleaseSprint sprint = new ReleaseSprint();
-Activity activity = new Activity();
+
+
+
+
+
+
+
+
+var productOwner = new TeamMember("Jelmer");
+var project = new Project("Kramse", productOwner);
+
+project.CreateSprint(SprintType.ReviewSprint, "Sprint 1", new DateOnly(2024, 1, 10), new DateOnly(2024, 1, 24));
+
+var sprint1 = project.GetSprintByName("Sprint 1");
+
 Item item = new Item("Item1", "Test item");
 Item item2 = new Item("Item2", "Test item");
+Activity activity = new Activity();
 item.AddActivity(activity);
 
-sprint.AddItemToSprintBacklog(item);
-sprint.AddItemToSprintBacklog(item2);
+sprint1.AddItemToSprintBacklog(item);
+sprint1.AddItemToSprintBacklog(item2);
 
-sprint.NextSprintState();
-sprint.NextSprintState();
-
-foreach (var i in sprint._sprintBackLog.GetItems())
-{
-    Console.WriteLine(i.Name + " " + i.Description);
-}
-
-item.GetItemState().ToDoing();
+sprint1.NextSprintState();
+sprint1.NextSprintState();
 
 
 
+item.ToDoingState();

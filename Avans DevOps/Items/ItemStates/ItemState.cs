@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Avans_DevOps.Items.ItemStates
+﻿namespace Avans_DevOps.Items.ItemStates
 {
     public abstract class ItemState
     {
+
+        public virtual void OnEnter(Item item)
+        {
+            Console.WriteLine($"{item.Name} bevindt zich nu in fase {this.GetType().Name}");
+        }
         public virtual void ToTodo()
         {
             throw new InvalidOperationException("Niet mogelijk vanuit deze fase");

@@ -5,6 +5,11 @@
         private string Name { get; set; } = "";
 
 
+        public TeamMember(string name) 
+        {
+            Name = name;
+        }
+
         public void SetName(string name)
         {
             Name = name;

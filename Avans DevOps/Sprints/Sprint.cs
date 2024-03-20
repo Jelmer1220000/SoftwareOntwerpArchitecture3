@@ -10,12 +10,18 @@ namespace Avans_DevOps.Sprints
         protected SprintState _sprintState;
         public Backlog _sprintBackLog;
 
+        public Guid Id { get; set; }
         public string Name { get; set; } = "";
         public DateOnly StartDate { get; set; }
         public DateOnly EndDate { get; set; }
 
-        public Sprint()
+        public Sprint(string name, DateOnly startDate, DateOnly endDate)
         {
+            Name = name;
+            StartDate = startDate;
+            EndDate = endDate;
+            Id = Guid.NewGuid();
+
             _sprintBackLog = new Backlog();
             _sprintState = new PlanningState(this);
         }
