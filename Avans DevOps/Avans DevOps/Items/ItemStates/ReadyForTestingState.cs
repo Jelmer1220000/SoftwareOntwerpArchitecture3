@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Avans_DevOps.Items.ItemStates
 {
-    public class ReadyForTestingState : IItemState
+    public class ReadyForTestingState : ItemState
     {
         private readonly Item _context;
 
@@ -15,25 +15,9 @@ namespace Avans_DevOps.Items.ItemStates
             _context = context;
         }
 
-        public void BackToStart()
+        public override void ToTesting()
         {
-            throw new InvalidOperationException("Niet mogelijk vanuit deze fase");
-        }
-
-        public void BackToTesting()
-        {
-            throw new InvalidOperationException("Niet mogelijk vanuit deze fase");
-        }
-
-        public void NextState()
-        {
-            _context.ChangeState(new TestingState(_context));
-        }
-
-        public void OnEnter()
-        {
-            //Notificatie naar testers
-
+            _context.ToTestingState();
         }
     }
 }

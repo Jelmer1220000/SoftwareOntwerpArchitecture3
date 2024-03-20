@@ -2,7 +2,7 @@
 
 namespace Avans_DevOps.Sprints.SprintStates
 {
-    public class PlanningState : ISprintState
+    public class PlanningState : SprintState
     {
 
         public Sprint _context;
@@ -12,24 +12,20 @@ namespace Avans_DevOps.Sprints.SprintStates
             _context = sprint;
         }
 
-        public void AddItem(Item item)
+        public override void AddItem(Item item)
         {
             _context._sprintBackLog.Add(item);
         }
 
-        public void RemoveItem(Item item)
+        public override void RemoveItem(Item item)
         {
             _context._sprintBackLog.Remove(item);
         }
 
-        public void NextState()
+        public override void NextState()
         {
             _context.ChangeState(new RunningState(_context));
         }
 
-        public void OnEnter()
-        {
-            // niks doen
-        }
     }
 }

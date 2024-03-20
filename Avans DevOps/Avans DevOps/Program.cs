@@ -11,12 +11,15 @@ item.AddActivity(activity);
 sprint.AddItemToSprintBacklog(item);
 sprint.AddItemToSprintBacklog(item2);
 
+sprint.NextSprintState();
+sprint.NextSprintState();
+
 foreach (var i in sprint._sprintBackLog.GetItems())
 {
     Console.WriteLine(i.Name + " " + i.Description);
 }
 
-item.GetItemState().NextState();
+item.GetItemState().ToDoing();
 
 
 

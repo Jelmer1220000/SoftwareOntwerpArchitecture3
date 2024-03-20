@@ -7,7 +7,7 @@ namespace Avans_DevOps.Items
     public class Item
     {
 
-        private IItemState ItemState { get; set; }
+        private ItemState ItemState { get; set; }
         public Guid Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
@@ -31,14 +31,41 @@ namespace Avans_DevOps.Items
             Activities.Remove(activity);
         }
 
-        //Veranderd de state van de huidige context.
-        public void ChangeState(IItemState state)
+        //Veranderd de state van de huidige context naar aangegeven context.
+        public void ToTodoState()
         {
-            this.ItemState = state;
-            this.ItemState.OnEnter();
+            ItemState = new TodoState(this);
         }
 
-        public IItemState GetItemState() { return this.ItemState; }
+        public void ToDoingState()
+        {
+           ItemState = new DoingState(this);
+        }
+
+        public void ToReadyForTestingState()
+        {
+            //Notificatie naar testers
+
+
+           ItemState = new ReadyForTestingState(this);
+        }
+
+        public void ToTestingState()
+        {
+          ItemState = new TestingState(this);
+        }
+
+        public void ToTestedState()
+        {
+            ItemState = new TestedState(this); 
+        }
+
+        public void ToDoneState()
+        {
+          ItemState = new DoneState(this);
+        }
+
+        public ItemState GetItemState() { return this.ItemState; }
 
     }
 }

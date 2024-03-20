@@ -1,6 +1,6 @@
 ﻿namespace Avans_DevOps.Items.ItemStates
 {
-    public class TestedState : IItemState
+    public class TestedState : ItemState
     {
 
         private readonly Item _context;
@@ -8,25 +8,16 @@
         {
             _context = context;
         }
-        public void BackToStart()
-        {
-            throw new InvalidOperationException("Niet mogelijk vanuit deze fase");
-        }
 
-        public void BackToTesting()
+        public override void ToTesting()
         {
             //(lead) developer via de definition of done of het echt naar de done toestand mag. Mocht dat niet zo zijn, dan gaat het item eerst terug naar ready for testing
-            _context.ChangeState(new ReadyForTestingState(_context));
+            _context.ToTestingState();
         }
 
-        public void NextState()
+        public override void ToDone()
         {
-            _context.ChangeState(new DoneState(_context));
-        }
-
-        public void OnEnter()
-        {
-            // Niks doen
+            _context.ToDoneState();
         }
     }
 }

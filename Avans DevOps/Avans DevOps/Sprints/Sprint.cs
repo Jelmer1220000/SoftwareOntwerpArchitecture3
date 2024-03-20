@@ -7,7 +7,7 @@ namespace Avans_DevOps.Sprints
     public abstract class Sprint
     {
 
-        protected ISprintState _sprintState;
+        protected SprintState _sprintState;
         public Backlog _sprintBackLog;
 
         public string Name { get; set; } = "";
@@ -21,7 +21,7 @@ namespace Avans_DevOps.Sprints
         }
 
         //Veranderd de state van de huidige context.
-        public void ChangeState(ISprintState state)
+        public void ChangeState(SprintState state)
         {
             this._sprintState = state;
             this._sprintState.OnEnter();
