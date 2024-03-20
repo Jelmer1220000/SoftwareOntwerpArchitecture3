@@ -1,4 +1,5 @@
 ﻿
+
 namespace Avans_DevOps.Sprints
 {
     public class ReviewSprint : Sprint

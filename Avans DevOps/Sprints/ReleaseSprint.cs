@@ -1,5 +1,4 @@
-﻿
-namespace Avans_DevOps.Sprints
+﻿namespace Avans_DevOps.Sprints
 {
     public class ReleaseSprint : Sprint
     {

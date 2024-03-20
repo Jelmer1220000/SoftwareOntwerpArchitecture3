@@ -1,6 +1,8 @@
-﻿using Avans_DevOps.Items;
+﻿using Avans_DevOps;
+using Avans_DevOps.Items;
 using Avans_DevOps.Models;
 using Avans_DevOps.Sprints.SprintFactory;
+using Microsoft.Extensions.DependencyInjection;
 
 
 
@@ -8,10 +10,11 @@ using Avans_DevOps.Sprints.SprintFactory;
 
 
 
-
+IServiceProvider serviceProvider = AvansDevOpsServiceCollection.BuildServiceProvider();
 
 var productOwner = new TeamMember("Jelmer");
-var project = new Project("Kramse", productOwner);
+var sprintFactory = serviceProvider.GetService<ISprintFactory>();
+var project = new Project("Kramse", productOwner, sprintFactory);
 
 project.CreateSprint(SprintType.ReviewSprint, "Sprint 1", new DateOnly(2024, 1, 10), new DateOnly(2024, 1, 24));
 

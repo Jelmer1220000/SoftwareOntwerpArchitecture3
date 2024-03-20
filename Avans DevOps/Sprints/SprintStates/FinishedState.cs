@@ -21,7 +21,7 @@ namespace Avans_DevOps.Sprints.SprintStates
                 return;
             }
 
-            if (contextType == typeof(ReviewState))
+            if (contextType == typeof(ReviewSprint))
             {
                 _context.ChangeState(new ReviewState(_context));
                 return;

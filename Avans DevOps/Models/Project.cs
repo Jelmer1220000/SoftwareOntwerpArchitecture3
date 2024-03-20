@@ -10,20 +10,18 @@ namespace Avans_DevOps.Models
         private readonly TeamMember _productOwner;
         private TeamMember? _scrumMaster;
         private IList<TeamMember> _developers;
-        private SprintFactory _sprintFactory;
         private IList<Sprint> _sprints;
+        private ISprintFactory _sprintFactory;
 
 
-
-        public Project(string name, TeamMember productOwner)
+        public Project(string name, TeamMember productOwner, ISprintFactory sprintFactory)
         {
             _Name = name;
             _productOwner = productOwner;
             _developers = [];
             _sprints = [];
 
-            // Dependency Injection?
-            _sprintFactory = new SprintFactory();
+            _sprintFactory = sprintFactory;
         }
 
 
