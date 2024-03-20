@@ -16,7 +16,7 @@ productOwner.AddNotificationPreference(new MailNotificationsService());
 var sprintFactory = serviceProvider.GetService<ISprintFactory>();
 var project = new Project("Kramse", productOwner, sprintFactory);
 
-project.CreateSprint(SprintType.ReviewSprint, "Sprint 1", new DateOnly(2024, 1, 10), new DateOnly(2024, 1, 24));
+project.CreateSprint(SprintType.ReleaseSprint, "Sprint 1", new DateOnly(2024, 1, 10), new DateOnly(2024, 1, 24));
 
 var sprint1 = project.GetSprintByName("Sprint 1");
 
@@ -33,6 +33,7 @@ item.AddActivity(activity);
 sprint1.AddItemToSprintBacklog(item);
 sprint1.AddItemToSprintBacklog(item2);
 
+sprint1.NextSprintState();
 sprint1.NextSprintState();
 sprint1.NextSprintState();
 

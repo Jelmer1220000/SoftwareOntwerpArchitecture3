@@ -2,6 +2,7 @@
 using Avans_DevOps.Models;
 using Avans_DevOps.Notifications;
 using Avans_DevOps.Sprints.SprintStates;
+using Avans_DevOps.Sprints.Visitor;
 
 namespace Avans_DevOps.Sprints
 {
@@ -48,6 +49,8 @@ namespace Avans_DevOps.Sprints
         {
             _notificationSubject.AddSubscriber(member);
         }
+
+        public abstract void AcceptVisitor(ISprintVisitor visitor);
 
         public void RemoveSubscriber(TeamMember member)
         {
