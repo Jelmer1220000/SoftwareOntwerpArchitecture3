@@ -1,11 +1,12 @@
 ﻿using Avans_DevOps.Items.ItemStates;
 using Avans_DevOps.Models;
+using Avans_DevOps.Notifications;
 
 namespace Avans_DevOps.Items
 {
     public class Item
     {
-
+        private NotificationSubject _notificationSubject = new NotificationSubject();
         private ItemState ItemState { get; set; }
         public Guid Id { get; set; }
         public string Name { get; set; }
@@ -18,6 +19,21 @@ namespace Avans_DevOps.Items
             Description = description;
             ItemState = new TodoState(this);
             Activities = [];
+        }
+
+        public void AddSubscriber(TeamMember member)
+        {
+            _notificationSubject.AddSubscriber(member);
+        }
+
+        public void RemoveSubscriber(TeamMember member) 
+        {  
+            _notificationSubject.RemoveSubscriber(member); 
+        }
+
+        public void SendNotifications()
+        {
+            _notificationSubject.SendNotifications();
         }
 
         public void AddActivity(Activity activity)
@@ -63,8 +79,6 @@ namespace Avans_DevOps.Items
         {
           ItemState = new DoneState(this);
         }
-
-        public ItemState GetItemState() { return this.ItemState; }
 
     }
 }

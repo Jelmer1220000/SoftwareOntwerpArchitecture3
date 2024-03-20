@@ -10,6 +10,11 @@
             this.OnEnter(_context);
         }
 
+        public override void OnEnter(Item item)
+        {
+            _context.SendNotifications();
+        }
+
         public override void ToTesting()
         {
             _context.ToTestingState();

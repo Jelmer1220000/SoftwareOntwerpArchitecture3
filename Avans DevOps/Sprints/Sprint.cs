@@ -1,5 +1,6 @@
 ﻿using Avans_DevOps.Items;
 using Avans_DevOps.Models;
+using Avans_DevOps.Notifications;
 using Avans_DevOps.Sprints.SprintStates;
 
 namespace Avans_DevOps.Sprints
@@ -9,6 +10,8 @@ namespace Avans_DevOps.Sprints
 
         protected SprintState _sprintState;
         public Backlog _sprintBackLog;
+
+        private NotificationSubject _notificationSubject = new NotificationSubject();
 
         public Guid Id { get; set; }
         public string Name { get; set; } = "";
@@ -39,6 +42,21 @@ namespace Avans_DevOps.Sprints
         public void AddItemToSprintBacklog(Item item)
         {
             _sprintBackLog.Add(item);
+        }
+
+        public void AddSubscriber(TeamMember member)
+        {
+            _notificationSubject.AddSubscriber(member);
+        }
+
+        public void RemoveSubscriber(TeamMember member)
+        {
+            _notificationSubject.RemoveSubscriber(member);
+        }
+
+        public void NotifySubscribers()
+        {
+            _notificationSubject.SendNotifications();
         }
     }
 }
