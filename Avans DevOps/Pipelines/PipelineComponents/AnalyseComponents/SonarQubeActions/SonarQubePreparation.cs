@@ -2,9 +2,9 @@
 
 namespace Avans_DevOps.Pipelines.PipelineComponents.AnalyseComponents.SonarQubeActions
 {
-    public class SonarQubeExecute : PipelineComponent
+    public class SonarCubePreparation : PipelineComponent
     {
-        public SonarQubeExecute(string name) : base(name)
+        public SonarCubePreparation(string name) : base(name)
         {
         }
 

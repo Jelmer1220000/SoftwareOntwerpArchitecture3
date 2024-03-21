@@ -15,7 +15,7 @@ namespace Avans_DevOps.Pipelines.PipelineActions.SourceComponents
 
         public override void AcceptVisitor(IPipelineVisitor visitor)
         {
-            throw new NotImplementedException();
+            visitor.Visit(this);
         }
     }
 }

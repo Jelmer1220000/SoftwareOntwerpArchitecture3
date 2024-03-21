@@ -8,11 +8,8 @@ using Avans_DevOps.Pipelines.PipelineActions.TestActions;
 using Avans_DevOps.Pipelines.PipelineActions.TestComponents;
 using Avans_DevOps.Pipelines.PipelineComponents;
 using Avans_DevOps.Pipelines.PipelineComponents.AnalyseComponents.SonarQubeActions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Avans_DevOps.Pipelines.PipelineComponents.PackageComponents;
+using Avans_DevOps.Pipelines.PipelineComponents.UtilityComponents;
 
 namespace Avans_DevOps.Pipelines.Visitor
 {
@@ -38,7 +35,7 @@ namespace Avans_DevOps.Pipelines.Visitor
             Console.WriteLine(execute.Execute());
         }
 
-        public void Visit(SonarQubePreperation preperation)
+        public void Visit(SonarCubePreparation preperation)
         {
             Console.WriteLine(preperation.Execute());
         }
@@ -111,6 +108,19 @@ namespace Avans_DevOps.Pipelines.Visitor
         public void Visit(NUnitTests nUnitTests)
         {
             Console.WriteLine(nUnitTests.Execute());
+        }
+
+        public void Visit(Package package)
+        {
+            Console.WriteLine(package.Execute());
+        }
+
+        public void Visit(Utility utility)
+        {
+           Console.WriteLine(utility.Execute());
+            foreach(var action in utility.actionList) {
+                action.Invoke();
+            }
         }
     }
 }

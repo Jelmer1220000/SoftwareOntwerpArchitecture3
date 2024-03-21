@@ -8,6 +8,8 @@ using Avans_DevOps.Pipelines.PipelineActions.TestActions;
 using Avans_DevOps.Pipelines.PipelineActions.TestComponents;
 using Avans_DevOps.Pipelines.PipelineComponents;
 using Avans_DevOps.Pipelines.PipelineComponents.AnalyseComponents.SonarQubeActions;
+using Avans_DevOps.Pipelines.PipelineComponents.PackageComponents;
+using Avans_DevOps.Pipelines.PipelineComponents.UtilityComponents;
 
 namespace Avans_DevOps.Pipelines.Visitor
 {
@@ -16,9 +18,9 @@ namespace Avans_DevOps.Pipelines.Visitor
         void Visit(Pipeline component);
         void Visit(AnalyseSonarQube sonarQube);
         void Visit(AnalyseContainer container);
-        void Visit(Execute execute);
-        void Visit(Preperation preperation);
-        void Visit(Reporting reporting);
+        void Visit(SonarQubeExecute execute);
+        void Visit(SonarCubePreparation preperation);
+        void Visit(SonarQubeReporting reporting);
         void Visit(BuildContainer buildContainer);
         void Visit(BuildAnt buildAnt);
         void Visit(BuildJenkins buildJenkins);
@@ -32,5 +34,7 @@ namespace Avans_DevOps.Pipelines.Visitor
         void Visit(TestContainer testContainer);
         void Visit(SeleniumTests seleniumTests);
         void Visit(NUnitTests nUnitTests);
+        void Visit(Package package);
+        void Visit(Utility utility);
     }
 }

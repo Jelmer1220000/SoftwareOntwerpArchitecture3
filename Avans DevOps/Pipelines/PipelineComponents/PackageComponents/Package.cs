@@ -1,10 +1,10 @@
 ﻿using Avans_DevOps.Pipelines.Visitor;
 
-namespace Avans_DevOps.Pipelines.PipelineActions.BuildComponents
+namespace Avans_DevOps.Pipelines.PipelineComponents.PackageComponents
 {
-    public class BuildAnt : PipelineComponent
+    public class Package : PipelineComponent
     {
-        public BuildAnt(string name) : base(name)
+        public Package(string name) : base(name)
         {
         }
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Avans_DevOps.Pipelines.Visitor;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,12 @@ namespace Avans_DevOps.Pipelines.PipelineActions.SourceActions
     {
         public SourceContainer(string name) : base(name)
         {
+        }
+
+        public override void AcceptVisitor(IPipelineVisitor visitor)
+        {
+            visitor.Visit(this);
+            base.AcceptVisitor(visitor);
         }
     }
 }

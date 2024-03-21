@@ -1,13 +1,8 @@
 ﻿using Avans_DevOps.Pipelines.Visitor;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Avans_DevOps.Pipelines.PipelineActions.TestComponents
 {
-    internal class SeleniumTests : PipelineComponent
+    public class SeleniumTests : PipelineComponent
     {
         public SeleniumTests(string name) : base(name)
         {
@@ -15,7 +10,7 @@ namespace Avans_DevOps.Pipelines.PipelineActions.TestComponents
 
         public override void AcceptVisitor(IPipelineVisitor visitor)
         {
-            throw new NotImplementedException();
+            visitor.Visit(this);
         }
     }
 }

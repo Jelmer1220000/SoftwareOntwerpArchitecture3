@@ -1,9 +1,4 @@
 ﻿using Avans_DevOps.Pipelines.Visitor;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Avans_DevOps.Pipelines
 {
@@ -22,6 +17,12 @@ namespace Avans_DevOps.Pipelines
                 comp.AcceptVisitor(visitor);
             }
         }
+
+        public virtual string Execute()
+        {
+            return $"Container running: {GetType().Name}";
+        }
+
 
         public void AddComponent(PipelineComponent component)
         {
