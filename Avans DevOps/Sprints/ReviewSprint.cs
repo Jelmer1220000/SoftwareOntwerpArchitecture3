@@ -1,10 +1,21 @@
-﻿namespace Avans_DevOps.Sprints
+﻿using Avans_DevOps.Sprints.Visitor;
+
+namespace Avans_DevOps.Sprints
 {
     public class ReviewSprint : Sprint
     {
+        public ReviewSprint(string name, DateOnly startDate, DateOnly endDate) : base(name, startDate, endDate)
+        {
+        }
+
+        internal override void AcceptVisitor(ISprintVisitor visitor)
+        {
+            visitor.AcceptReview(this);
+        }
+
         public override void NextSprintState()
         {
-            this.NextSprintState();
+            this._sprintState.NextState();
         }
     }
 }

@@ -14,6 +14,7 @@ namespace Avans_DevOps.Items.ItemStates
         public TodoState(Item context)
         {
             _context = context;
+            this.OnEnter(_context);
         }
 
         public override void ToDoing()

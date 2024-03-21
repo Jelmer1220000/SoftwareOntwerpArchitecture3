@@ -7,6 +7,7 @@
         public TestedState(Item context)
         {
             _context = context;
+            this.OnEnter(_context);
         }
 
         public override void ToTesting()

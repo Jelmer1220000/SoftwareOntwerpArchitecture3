@@ -1,4 +1,5 @@
 ﻿using Avans_DevOps.Items;
+using Avans_DevOps.Sprints.Visitor;
 
 namespace Avans_DevOps.Sprints.SprintStates
 {
@@ -14,20 +15,8 @@ namespace Avans_DevOps.Sprints.SprintStates
 
         public override void NextState()
         {
-            var contextType = _context.GetType();
-            if (contextType == typeof(ReleaseSprint))
-            {
-                _context.ChangeState(new ReleaseState(_context));
-                return;
-            }
-
-            if (contextType == typeof(ReviewState))
-            {
-                _context.ChangeState(new ReviewState(_context));
-                return;
-            }
-
-            throw new NotImplementedException($"De state van {contextType} na state 'finished' is niet geïmplementeerd.");
+            ISprintVisitor visitor = new SprintVisitor();
+            _context.AcceptVisitor(visitor);
         }
     }
 }

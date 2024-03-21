@@ -4,7 +4,7 @@ namespace Avans_DevOps.Sprints.SprintStates
 {
     public class ReleaseState : SprintState
     {
-        public Sprint _context;
+        private readonly Sprint _context;
 
         public ReleaseState(Sprint sprint)
         {
@@ -18,8 +18,9 @@ namespace Avans_DevOps.Sprints.SprintStates
 
         public override void OnEnter()
         {
+            Console.WriteLine("Sprint entered: " + this.GetType().Name);
             //TODO
-           // Run pipeline
+            // Run pipeline
         }
     }
 }

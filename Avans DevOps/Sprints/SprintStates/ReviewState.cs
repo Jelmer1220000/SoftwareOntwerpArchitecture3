@@ -5,7 +5,7 @@ namespace Avans_DevOps.Sprints.SprintStates
     public class ReviewState : SprintState
     {
 
-        public Sprint _context;
+        private readonly Sprint _context;
 
         public ReviewState(Sprint sprint)
         {

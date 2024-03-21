@@ -1,4 +1,7 @@
-﻿namespace Avans_DevOps.Models
+﻿using Avans_DevOps.Sprints;
+using Avans_DevOps.Sprints.SprintFactory;
+
+namespace Avans_DevOps.Models
 {
     public class Project
     {
@@ -7,14 +10,18 @@
         private readonly TeamMember _productOwner;
         private TeamMember? _scrumMaster;
         private IList<TeamMember> _developers;
+        private IList<Sprint> _sprints;
+        private ISprintFactory _sprintFactory;
 
 
-
-        public Project(string name, TeamMember productOwner)
+        public Project(string name, TeamMember productOwner, ISprintFactory sprintFactory)
         {
             _Name = name;
             _productOwner = productOwner;
             _developers = [];
+            _sprints = [];
+
+            _sprintFactory = sprintFactory;
         }
 
 
@@ -32,5 +39,17 @@
         {
             return _scrumMaster!;
         }
+
+        public void CreateSprint(SprintType type, string name, DateOnly startDate, DateOnly endDate)
+        {
+            var newSprint = _sprintFactory.CreateSprint(type, name, startDate, endDate);
+            _sprints.Add(newSprint);
+        }
+
+        public Sprint? GetSprintByName(string name)
+        {
+            var sprint = _sprints.Where(s => s.Name == name).FirstOrDefault();
+            return sprint;
+        } 
     }
 }

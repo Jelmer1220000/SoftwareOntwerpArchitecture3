@@ -13,6 +13,7 @@ namespace Avans_DevOps.Items.ItemStates
         public TestingState(Item context)
         {
             _context = context;
+            this.OnEnter(_context);
         }
 
         public override void ToTodo()
