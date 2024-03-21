@@ -8,7 +8,7 @@ namespace Avans_DevOps.Sprints
         {
         }
 
-        public override void AcceptVisitor(ISprintVisitor visitor)
+        internal override void AcceptVisitor(ISprintVisitor visitor)
         {
             visitor.AcceptRelease(this);
         }

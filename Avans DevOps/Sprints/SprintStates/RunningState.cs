@@ -4,7 +4,7 @@ namespace Avans_DevOps.Sprints.SprintStates
 {
     public class RunningState : SprintState
     {
-        public Sprint _context;
+        private readonly Sprint _context;
 
         public RunningState(Sprint context)
         {

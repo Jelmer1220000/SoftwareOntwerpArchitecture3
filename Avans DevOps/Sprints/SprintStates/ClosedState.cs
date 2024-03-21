@@ -5,7 +5,7 @@ namespace Avans_DevOps.Sprints.SprintStates
     public class ClosedState : SprintState
     {
 
-        public Sprint _context;
+        private readonly Sprint _context;
 
         public ClosedState(Sprint sprint)
         {

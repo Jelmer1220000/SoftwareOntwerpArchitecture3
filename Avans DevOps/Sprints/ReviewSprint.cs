@@ -1,6 +1,4 @@
-﻿
-
-using Avans_DevOps.Sprints.Visitor;
+﻿using Avans_DevOps.Sprints.Visitor;
 
 namespace Avans_DevOps.Sprints
 {
@@ -10,7 +8,7 @@ namespace Avans_DevOps.Sprints
         {
         }
 
-        public override void AcceptVisitor(ISprintVisitor visitor)
+        internal override void AcceptVisitor(ISprintVisitor visitor)
         {
             visitor.AcceptReview(this);
         }

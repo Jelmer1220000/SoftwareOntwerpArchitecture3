@@ -12,7 +12,7 @@ namespace Avans_DevOps.Sprints
         protected SprintState _sprintState;
         public Backlog _sprintBackLog;
 
-        private NotificationSubject _notificationSubject = new NotificationSubject();
+        private readonly NotificationSubject _notificationSubject = new NotificationSubject();
 
         public Guid Id { get; set; }
         public string Name { get; set; } = "";
@@ -40,26 +40,30 @@ namespace Avans_DevOps.Sprints
         //Gaat naar de volgende state.
         public abstract void NextSprintState();
 
+        //Staat een visitor toe vanuit de states (voor Review/Release sprint)
+        internal abstract void AcceptVisitor(ISprintVisitor visitor);
+
         public void AddItemToSprintBacklog(Item item)
         {
             _sprintBackLog.Add(item);
         }
 
+        //Voegt Listener toe voor notificaties
         public void AddSubscriber(TeamMember member)
         {
             _notificationSubject.AddSubscriber(member);
         }
-
-        public abstract void AcceptVisitor(ISprintVisitor visitor);
 
         public void RemoveSubscriber(TeamMember member)
         {
             _notificationSubject.RemoveSubscriber(member);
         }
 
+        //Verstuurd notificatie naar alle Listeners
         public void NotifySubscribers()
         {
             _notificationSubject.SendNotifications();
         }
+
     }
 }

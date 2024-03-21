@@ -4,7 +4,7 @@ namespace Avans_DevOps.Sprints.SprintStates
 {
     public class ReleaseState : SprintState
     {
-        public Sprint _context;
+        private readonly Sprint _context;
 
         public ReleaseState(Sprint sprint)
         {
