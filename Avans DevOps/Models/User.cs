@@ -2,12 +2,12 @@
 
 namespace Avans_DevOps.Models
 {
-    public class TeamMember : ISubscriber
+    public class User : ISubscriber
     {
         private string Name { get; set; } = "";
         private IList<INotificationService<string>> _preferences;
 
-        public TeamMember(string name) 
+        public User(string name) 
         {
             Name = name;
             _preferences = [];

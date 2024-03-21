@@ -9,9 +9,9 @@ namespace Avans_DevOps.Notifications
 {
     public interface ISubject
     {
-        public void AddSubscriber(TeamMember member);
+        public void AddSubscriber(User member);
 
-        public void RemoveSubscriber(TeamMember member);
+        public void RemoveSubscriber(User member);
 
         public void SendNotifications();
     }

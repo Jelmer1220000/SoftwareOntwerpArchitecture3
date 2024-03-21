@@ -49,12 +49,12 @@ namespace Avans_DevOps.Sprints
         }
 
         //Voegt Listener toe voor notificaties
-        public void AddSubscriber(TeamMember member)
+        public void AddSubscriber(User member)
         {
             _notificationSubject.AddSubscriber(member);
         }
 
-        public void RemoveSubscriber(TeamMember member)
+        public void RemoveSubscriber(User member)
         {
             _notificationSubject.RemoveSubscriber(member);
         }

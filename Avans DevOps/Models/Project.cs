@@ -7,14 +7,15 @@ namespace Avans_DevOps.Models
     {
         public string _Name;
 
-        private readonly TeamMember _productOwner;
-        private TeamMember? _scrumMaster;
-        private IList<TeamMember> _developers;
+        private readonly User _productOwner;
+        private User? _scrumMaster;
+        private IList<User> _developers;
+        private IList<User> _testers;
         private IList<Sprint> _sprints;
         private ISprintFactory _sprintFactory;
 
 
-        public Project(string name, TeamMember productOwner, ISprintFactory sprintFactory)
+        public Project(string name, User productOwner, ISprintFactory sprintFactory)
         {
             _Name = name;
             _productOwner = productOwner;
@@ -25,17 +26,17 @@ namespace Avans_DevOps.Models
         }
 
 
-        public void AddDeveloper(TeamMember developer)
+        public void AddDeveloper(User developer)
         {
             _developers.Add(developer);
         }
 
-        public void SetScrumMaster(TeamMember scrumMaster)
+        public void SetScrumMaster(User scrumMaster)
         {
             _scrumMaster = scrumMaster;
         }
 
-        public TeamMember GetScrumMaster()
+        public User GetScrumMaster()
         {
             return _scrumMaster!;
         }
