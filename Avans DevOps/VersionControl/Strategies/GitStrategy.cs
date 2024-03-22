@@ -57,21 +57,21 @@
         }
 
         //Push branch naar de remote repo
-        public void Push(string branchName)
+        public void Push()
         {
-            if (!_localRepository.ContainsKey(branchName))
+            if (!_localRepository.ContainsKey(_currentBranch))
             {
-                Console.WriteLine($"GIT: Branch '{branchName}' doesn't exist in the local repository.");
+                Console.WriteLine($"GIT: Branch '{_currentBranch}' doesn't exist in the local repository.");
                 return;
             }
 
-            if (!_remoteRepository.ContainsKey(branchName))
+            if (!_remoteRepository.ContainsKey(_currentBranch))
             {
-                _remoteRepository[branchName] = new List<string>();
+                _remoteRepository[_currentBranch] = new List<string>();
             }
 
-            _remoteRepository[branchName].AddRange(_localRepository[branchName]);
-            Console.WriteLine($"GIT: Pushed changes from branch '{branchName}' in local repository to remote repository.");
+            _remoteRepository[_currentBranch].AddRange(_localRepository[_currentBranch]);
+            Console.WriteLine($"GIT: Pushed changes from branch '{_currentBranch}' in local repository to remote repository.");
         }
 
         //Haal branch op van de remote repo.

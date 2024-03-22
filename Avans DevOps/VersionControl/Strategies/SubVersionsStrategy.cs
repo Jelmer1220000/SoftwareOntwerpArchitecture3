@@ -33,7 +33,7 @@
             throw new NotImplementedException();
         }
 
-        public void Push(string branchName)
+        public void Push()
         {
             throw new NotImplementedException();
         }

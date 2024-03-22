@@ -3,7 +3,7 @@
     public interface IVersionControlStrategy
     {
         void Commit(string changes);
-        void Push(string branchName);
+        void Push();
         void Pull(string branchName);
         void Branch(string branchName);
         void Checkout(string branchName);

@@ -2,11 +2,11 @@
 
 namespace Avans_DevOps.VersionControl
 {
-    public class VersionControl
+    public class VersionControl : IVersionControl
     {
-        private IVersionControlStrategy _versionController;
+        private Strategies.IVersionControlStrategy _versionController;
 
-        public VersionControl(IVersionControlStrategy versionControl)
+        public VersionControl(Strategies.IVersionControlStrategy versionControl)
         {
             _versionController = versionControl;
         }
@@ -16,9 +16,9 @@ namespace Avans_DevOps.VersionControl
             _versionController.Commit(changes);
         }
 
-        public void Push(string branchName)
+        public void Push()
         {
-            _versionController.Push(branchName);
+            _versionController.Push();
         }
 
         public void Pull(string branchName)
