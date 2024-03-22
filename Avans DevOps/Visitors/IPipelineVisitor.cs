@@ -11,7 +11,7 @@ using Avans_DevOps.Pipelines.PipelineComponents.AnalyseComponents.SonarQubeActio
 using Avans_DevOps.Pipelines.PipelineComponents.PackageComponents;
 using Avans_DevOps.Pipelines.PipelineComponents.UtilityComponents;
 
-namespace Avans_DevOps.Pipelines.Visitor
+namespace Avans_DevOps.Visitor
 {
     public interface IPipelineVisitor
     {

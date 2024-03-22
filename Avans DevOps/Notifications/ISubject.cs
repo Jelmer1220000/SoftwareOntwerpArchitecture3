@@ -13,6 +13,6 @@ namespace Avans_DevOps.Notifications
 
         public void RemoveSubscriber(User member);
 
-        public void SendNotifications();
+        public void SendNotifications(string text);
     }
 }

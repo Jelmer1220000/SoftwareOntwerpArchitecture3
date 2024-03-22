@@ -8,6 +8,7 @@ namespace Avans_DevOps.Notifications
 {
     public interface ISubscriber
     {
-        public void Update();
+        public void Update(string text);
+
     }
 }

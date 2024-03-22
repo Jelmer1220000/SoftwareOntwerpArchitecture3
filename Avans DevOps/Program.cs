@@ -2,6 +2,7 @@
 using Avans_DevOps.Items;
 using Avans_DevOps.Models;
 using Avans_DevOps.Notifications;
+using Avans_DevOps.Notifications.NotificationServices;
 using Avans_DevOps.Pipelines.PipelineActions.AnalyseActions;
 using Avans_DevOps.Pipelines.PipelineActions.AnalyseComponents;
 using Avans_DevOps.Pipelines.PipelineActions.BuildComponents;
@@ -14,47 +15,11 @@ using Avans_DevOps.Pipelines.PipelineComponents;
 using Avans_DevOps.Pipelines.PipelineComponents.AnalyseComponents.SonarQubeActions;
 using Avans_DevOps.Pipelines.PipelineComponents.PackageComponents;
 using Avans_DevOps.Pipelines.PipelineComponents.UtilityComponents;
-using Avans_DevOps.Pipelines.Visitor;
 using Avans_DevOps.Sprints.SprintFactory;
 using Microsoft.Extensions.DependencyInjection;
 
 
-//IServiceProvider serviceProvider = AvansDevOpsServiceCollection.BuildServiceProvider();
-
-//var productOwner = new TeamMember("Jelmer");
-
-//productOwner.AddNotificationPreference(new SlackNotificationsService());
-//productOwner.AddNotificationPreference(new MailNotificationsService());
-
-//var sprintFactory = serviceProvider.GetService<ISprintFactory>();
-//var project = new Project("Kramse", productOwner, sprintFactory);
-
-//project.CreateSprint(SprintType.ReleaseSprint, "Sprint 1", new DateOnly(2024, 1, 10), new DateOnly(2024, 1, 24));
-
-//var sprint1 = project.GetSprintByName("Sprint 1");
-
-//Item item = new Item("Item1", "Test item");
-
-//sprint1.AddSubscriber(productOwner);
-//item.AddSubscriber(productOwner);
-
-
-// Item item2 = new Item("Item2", "Test item");
-//Activity activity = new Activity();
-//item.AddActivity(activity);
-
-//sprint1.AddItemToSprintBacklog(item);
-//sprint1.AddItemToSprintBacklog(item2);
-
-//sprint1.NextSprintState();
-//sprint1.NextSprintState();
-//sprint1.NextSprintState();
-
-
-
-//item.ToDoingState();
-//item.ToReadyForTestingState();
-
+IServiceProvider serviceProvider = AvansDevOpsServiceCollection.BuildServiceProvider();
 
 //// Pipeline demo ////
 var pipeline = new Pipeline("Pipeline");
@@ -98,6 +63,51 @@ utility.AddAction(commando2);
 utility.AddAction(commando3);
 pipeline.AddComponent(utility);
 
-var pipelineVisitor = new PipelineVisitor();
-pipeline.AcceptVisitor(pipelineVisitor);
+var productOwner = new User("ProductOwner");
+var tester = new User("Tester1");
+var scrumMaster = new User("Scrum Master");
+
+productOwner.AddNotificationPreference(new SlackNotificationsService());
+productOwner.AddNotificationPreference(new MailNotificationsService());
+
+scrumMaster.AddNotificationPreference(new MailNotificationsService());
+
+tester.AddNotificationPreference(new SlackNotificationsService());
+tester.AddNotificationPreference(new MailNotificationsService());
+
+var sprintFactory = serviceProvider.GetService<ISprintFactory>();
+var project = new Project("Kramse", productOwner, sprintFactory);
+
+project.AddTester(tester);
+project.SetScrumMaster(scrumMaster);
+
+project.CreateSprint(SprintType.ReleaseSprint, "Sprint 1", new DateOnly(2024, 1, 10), new DateOnly(2024, 1, 24), pipeline);
+
+var sprint1 = project.GetSprintByName("Sprint 1");
+
+Item item = new Item("Item1", "Test item");
+
+Item item2 = new Item("Item2", "Test item");
+Activity activity = new Activity();
+item.AddActivity(activity);
+
+sprint1.AddItemToSprintBacklog(item);
+sprint1.AddItemToSprintBacklog(item2);
+
+sprint1.NextSprintState();
+
+//Naar doing.
+item.ToDoingState();
+
+//Notificatie naar testers
+item.ToReadyForTestingState();
+
+
+item.ToDoneState();
+
+//Bij release Pipeline wordt gestart zodra sprint state naar release gaat.
+sprint1.NextSprintState();
+
+//Notificatie naar scrum master en product owner omdat sprint naar done gaat.
+sprint1.NextSprintState();
 
