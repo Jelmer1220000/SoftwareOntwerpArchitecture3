@@ -11,7 +11,7 @@ using Avans_DevOps.Pipelines.PipelineComponents.AnalyseComponents.SonarQubeActio
 using Avans_DevOps.Pipelines.PipelineComponents.PackageComponents;
 using Avans_DevOps.Pipelines.PipelineComponents.UtilityComponents;
 
-namespace Avans_DevOps.Pipelines.Visitor
+namespace Avans_DevOps.Visitor
 {
     public class PipelineVisitor : IPipelineVisitor
     {
@@ -22,7 +22,7 @@ namespace Avans_DevOps.Pipelines.Visitor
 
         public void Visit(AnalyseSonarQube sonarQube)
         {
-           Console.WriteLine(sonarQube.Execute());
+            Console.WriteLine(sonarQube.Execute());
         }
 
         public void Visit(AnalyseContainer container)
@@ -87,6 +87,8 @@ namespace Avans_DevOps.Pipelines.Visitor
 
         public void Visit(SourceAzure sourceAzure)
         {
+            //TEST PIPELINE FAIL
+            throw new InvalidOperationException("Azure not found");
             Console.WriteLine(sourceAzure.Execute());
         }
 
@@ -117,8 +119,9 @@ namespace Avans_DevOps.Pipelines.Visitor
 
         public void Visit(Utility utility)
         {
-           Console.WriteLine(utility.Execute());
-            foreach(var action in utility.actionList) {
+            Console.WriteLine(utility.Execute());
+            foreach (var action in utility.actionList)
+            {
                 action.Invoke();
             }
         }

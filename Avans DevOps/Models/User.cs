@@ -1,4 +1,5 @@
 ﻿using Avans_DevOps.Notifications;
+using Avans_DevOps.Notifications.NotificationServices;
 
 namespace Avans_DevOps.Models
 {
@@ -19,11 +20,11 @@ namespace Avans_DevOps.Models
         }
         public string GetName() { return Name; }
 
-        public void Update()
+        public void Update(string text)
         {
             foreach (var preference in  _preferences)
             {
-                preference.SendNotification(GetName());
+                preference.SendNotification(text, GetName());
             }
         }
 

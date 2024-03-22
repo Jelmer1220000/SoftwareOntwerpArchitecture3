@@ -1,4 +1,5 @@
 ﻿using Avans_DevOps.Items;
+using Avans_DevOps.Sprints;
 
 namespace Avans_DevOps.Models
 {
@@ -6,12 +7,15 @@ namespace Avans_DevOps.Models
     {
 
         private IList<Item> _items { get; set; }
+        private Sprint _sprint;
 
-        public Backlog(){
+        public Backlog(Sprint sprint){
             _items = [];
+            _sprint = sprint;
         }
 
-        public void Add(Item item) { 
+        public void Add(Item item) {
+            item.SetBacklog(this);
             _items.Add(item);
         }
 
@@ -22,6 +26,11 @@ namespace Avans_DevOps.Models
         public IList<Item> GetItems()
         {
             return _items;
+        }
+
+        public Sprint GetSprint()
+        {
+            return _sprint;
         }
 
         public void Clear(){

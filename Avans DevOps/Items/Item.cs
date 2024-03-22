@@ -6,8 +6,10 @@ namespace Avans_DevOps.Items
 {
     public class Item
     {
-        private NotificationSubject _notificationSubject = new NotificationSubject();
-        private ItemState ItemState { get; set; }
+        protected ItemState _itemState { get; set; }
+
+        private Backlog _backlog;
+        private Project _project;
         public Guid Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
@@ -17,23 +19,28 @@ namespace Avans_DevOps.Items
         {
             Name = name;
             Description = description;
-            ItemState = new TodoState(this);
+            this._itemState = new TodoState(this);
             Activities = [];
         }
 
-        public void AddSubscriber(User member)
+        public void SetBacklog(Backlog backlog)
         {
-            _notificationSubject.AddSubscriber(member);
+            _backlog = backlog;
         }
 
-        public void RemoveSubscriber(User member) 
-        {  
-            _notificationSubject.RemoveSubscriber(member); 
+        public Project GetProject()
+        {
+            return _backlog.GetSprint().GetProject();
         }
 
-        public void SendNotifications()
+        public IList<User> GetTesters()
         {
-            _notificationSubject.SendNotifications();
+            return GetProject().GetTesters();
+        }
+
+        public User GetScrumMaster()
+        {
+            return GetProject().GetScrumMaster();
         }
 
         public void AddActivity(Activity activity)
@@ -49,35 +56,32 @@ namespace Avans_DevOps.Items
         //Veranderd de state van de huidige context naar aangegeven context.
         public void ToTodoState()
         {
-            ItemState = new TodoState(this);
+            this._itemState = new TodoState(this);
         }
 
         public void ToDoingState()
         {
-           ItemState = new DoingState(this);
+           this._itemState = new DoingState(this);
         }
 
         public void ToReadyForTestingState()
         {
-            //TODO
-            //Notificatie naar testers
-
-           ItemState = new ReadyForTestingState(this);
+           this._itemState = new ReadyForTestingState(this);
         }
 
         public void ToTestingState()
         {
-          ItemState = new TestingState(this);
+          this._itemState = new TestingState(this);
         }
 
         public void ToTestedState()
         {
-            ItemState = new TestedState(this); 
+            this._itemState = new TestedState(this); 
         }
 
         public void ToDoneState()
         {
-          ItemState = new DoneState(this);
+          this._itemState = new DoneState(this);
         }
 
     }

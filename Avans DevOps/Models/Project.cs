@@ -1,4 +1,5 @@
-﻿using Avans_DevOps.Sprints;
+﻿using Avans_DevOps.Pipelines.PipelineComponents;
+using Avans_DevOps.Sprints;
 using Avans_DevOps.Sprints.SprintFactory;
 
 namespace Avans_DevOps.Models
@@ -21,7 +22,7 @@ namespace Avans_DevOps.Models
             _productOwner = productOwner;
             _developers = [];
             _sprints = [];
-
+            _testers = [];
             _sprintFactory = sprintFactory;
         }
 
@@ -29,6 +30,11 @@ namespace Avans_DevOps.Models
         public void AddDeveloper(User developer)
         {
             _developers.Add(developer);
+        }
+
+        public void AddTester(User tester)
+        {
+            _testers.Add(tester);
         }
 
         public void SetScrumMaster(User scrumMaster)
@@ -41,9 +47,19 @@ namespace Avans_DevOps.Models
             return _scrumMaster!;
         }
 
-        public void CreateSprint(SprintType type, string name, DateOnly startDate, DateOnly endDate)
+        public User GetProductOwner()
         {
-            var newSprint = _sprintFactory.CreateSprint(type, name, startDate, endDate);
+            return _productOwner;
+        }
+
+        public IList<User> GetTesters()
+        {
+            return _testers;
+        }
+
+        public void CreateSprint(SprintType type, string name, DateOnly startDate, DateOnly endDate, Pipeline pipeline)
+        {
+            var newSprint = _sprintFactory.CreateSprint(type, name, startDate, endDate, this, pipeline);
             _sprints.Add(newSprint);
         }
 

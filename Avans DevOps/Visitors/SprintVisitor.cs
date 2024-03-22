@@ -1,11 +1,12 @@
-﻿using Avans_DevOps.Sprints.SprintStates;
+﻿using Avans_DevOps.Sprints;
+using Avans_DevOps.Sprints.SprintStates;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Avans_DevOps.Sprints.Visitor
+namespace Avans_DevOps.Visitor
 {
     public class SprintVisitor : ISprintVisitor
     {

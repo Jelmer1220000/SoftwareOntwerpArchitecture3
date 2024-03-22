@@ -1,4 +1,4 @@
-﻿using Avans_DevOps.Pipelines.Visitor;
+﻿using Avans_DevOps.Visitor;
 
 namespace Avans_DevOps.Pipelines.PipelineComponents.UtilityComponents
 {

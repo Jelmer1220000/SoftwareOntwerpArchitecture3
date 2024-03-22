@@ -1,4 +1,4 @@
-﻿using Avans_DevOps.Pipelines.Visitor;
+﻿using Avans_DevOps.Visitor;
 
 namespace Avans_DevOps.Pipelines.PipelineComponents
 {
@@ -6,6 +6,11 @@ namespace Avans_DevOps.Pipelines.PipelineComponents
     {
         public Pipeline(string name) : base(name)
         {
+        }
+
+        public override string Execute()
+        {
+            return $"Starting pipeline: {Name}";
         }
         public override void AcceptVisitor(IPipelineVisitor visitor)
         {
