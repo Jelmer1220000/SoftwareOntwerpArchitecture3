@@ -2,6 +2,7 @@
 using Avans_DevOps.Models;
 using Avans_DevOps.Models.UserRoles;
 using Avans_DevOps.Pipelines.PipelineComponents;
+using Avans_DevOps.Sprints;
 using Avans_DevOps.VersionControl;
 
 namespace Avans_DevOps.Sprints.SprintFactory

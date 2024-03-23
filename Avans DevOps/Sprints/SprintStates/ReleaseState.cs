@@ -1,4 +1,5 @@
-﻿using Avans_DevOps.Notifications;
+using Avans_DevOps.Notifications;
+using Avans_DevOps.Sprints;
 using Avans_DevOps.Pipelines.PipelineComponents;
 using Avans_DevOps.Visitor;
 
@@ -22,13 +23,14 @@ namespace Avans_DevOps.Sprints.SprintStates
 
         public override void OnEnter()
         {
-            Console.WriteLine("Sprint entered: " + this.GetType().Name);
+            Console.WriteLine("Sprint entered: " + GetType().Name);
 
             try
             {
                 _context.Pipeline.AcceptVisitor(new PipelineVisitor());
                 NextState();
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 _notificationSubject.SendNotifications($"Pipeline for sprint: '{_context.Name}' failed on: {e.Message}");
 
