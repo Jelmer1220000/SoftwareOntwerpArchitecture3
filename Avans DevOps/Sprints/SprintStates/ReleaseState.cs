@@ -1,4 +1,6 @@
 ﻿using Avans_DevOps.Notifications;
+using Avans_DevOps.Pipelines.PipelineComponents;
+using Avans_DevOps.Visitor;
 
 namespace Avans_DevOps.Sprints.SprintStates
 {
@@ -24,7 +26,7 @@ namespace Avans_DevOps.Sprints.SprintStates
 
             try
             {
-                _context.RunPipeline();
+                _context.Pipeline.AcceptVisitor(new PipelineVisitor());
                 NextState();
             } catch (Exception e)
             {
@@ -33,7 +35,6 @@ namespace Avans_DevOps.Sprints.SprintStates
                 //TRY AGAIN OR CANCEL PIPELINE
                 Console.WriteLine("Try again? Yes/No");
                 string tryAgain = Console.ReadLine()!;
-
                 if (tryAgain == "Yes") OnEnter();
             }
         }

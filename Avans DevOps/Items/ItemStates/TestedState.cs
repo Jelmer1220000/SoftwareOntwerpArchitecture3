@@ -1,4 +1,7 @@
-﻿namespace Avans_DevOps.Items.ItemStates
+﻿using Avans_DevOps.Forums;
+using Avans_DevOps.Models;
+
+namespace Avans_DevOps.Items.ItemStates
 {
     public class TestedState : ItemState
     {
@@ -12,14 +15,17 @@
 
         public override void ToTesting()
         {
-            //TODO
-            //(lead) developer via de definition of done of het echt naar de done toestand mag. Mocht dat niet zo zijn, dan gaat het item eerst terug naar ready for testing
             _context.ToTestingState();
         }
 
-        public override void ToDone()
+        public override void ToDone(User user)
         {
-            _context.ToDoneState();
+            if (user.CanMoveBacklogItemFromTested()) _context.ToDoneState();
+        }
+
+        public override void StartThread(string title, string description, User user)
+        {
+            _context.Thread = new AThread(title, description, _context, _context.Forum, user);
         }
     }
 }

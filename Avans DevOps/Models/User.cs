@@ -3,7 +3,7 @@ using Avans_DevOps.Notifications.NotificationServices;
 
 namespace Avans_DevOps.Models
 {
-    public class User : ISubscriber
+    public abstract class User : ISubscriber
     {
         private string Name { get; set; } = "";
         private IList<INotificationService<string>> _preferences;
@@ -31,6 +31,31 @@ namespace Avans_DevOps.Models
         public void AddNotificationPreference(INotificationService<string> notification)
         {
             _preferences.Add(notification);
+        }
+
+        //Business Rules
+        public virtual bool CanManagePipeline()
+        {
+            Console.WriteLine("ERROR: Je hebt geen toestemming om de pipeline aan te passen.");
+            return false;
+        }
+
+        public virtual bool CanMoveBacklogItemFromTested()
+        {
+            Console.WriteLine("ERROR: Je hebt geen toestemming om items naar done te slepen.");
+            return false;
+        }
+
+        public virtual bool CanUploadReview()
+        {
+            Console.WriteLine("ERROR: Je hebt geen toestemming om een Review te uploaden.");
+            return false;
+        }
+
+        public virtual bool CanCancelSprint()
+        {
+            Console.WriteLine("ERROR: Je hebt geen toestemming om een sprint te cancellen.");
+            return false;
         }
     }
 }

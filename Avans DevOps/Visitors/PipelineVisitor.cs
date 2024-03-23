@@ -17,7 +17,7 @@ namespace Avans_DevOps.Visitor
     {
         public void Visit(Pipeline component)
         {
-            Console.WriteLine(component.Execute());
+           Console.WriteLine(component.Execute());
         }
 
         public void Visit(AnalyseSonarQube sonarQube)

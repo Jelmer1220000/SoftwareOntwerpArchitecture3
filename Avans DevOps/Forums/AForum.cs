@@ -1,28 +1,28 @@
-﻿namespace Avans_DevOps.Forum
+﻿namespace Avans_DevOps.Forums
 {
-    public class Forum
+    public class AForum
     {
         public Guid Id { get; set; }
 
-        public IList<Thread> Threads { get; set; }
+        public IList<AThread> Threads { get; set; }
 
 
-        public Forum()
+        public AForum()
         {
             Threads = [];
         }
 
-        public void AddThread(Thread thread)
+        public void AddThread(AThread thread)
         {
             Threads.Add(thread);
         }
 
-        public void Remove(Thread thread)
+        public void Remove(AThread thread)
         {
             Threads.Remove(thread);
         }
 
-        public IList<Thread> GetAllThreads()
+        public IList<AThread> GetAllThreads()
         {
             return Threads.ToList();
         }
