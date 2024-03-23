@@ -1,4 +1,5 @@
 ﻿using Avans_DevOps.Items;
+using Avans_DevOps.Models;
 
 namespace Avans_DevOps.Sprints.SprintStates
 {
@@ -12,6 +13,16 @@ namespace Avans_DevOps.Sprints.SprintStates
         public virtual void RemoveItem(Item item)
         {
             throw new InvalidOperationException("Het is niet mogelijk items te verwijderen in deze fase van de sprint.");
+        }
+
+        public virtual void ChangeProperties(string name, DateOnly startDate, DateOnly endDate)
+        {
+            throw new InvalidOperationException("Het is niet mogelijk een sprint aan te passen in deze fase van de sprint.");
+        }
+
+        public virtual void UploadReview(User user, byte[] review)
+        {
+            throw new InvalidOperationException("Het is niet mogelijk een review te uploaden in deze fase.");
         }
 
         public virtual void NextState()

@@ -21,7 +21,7 @@ namespace Avans_DevOps.Sprints.SprintStates
         public override void OnEnter()
         {
             Console.WriteLine("Sprint closed");
-
+            foreach (var item in _context._sprintBackLog) if (item.Thread != null) item.ArchiveThread();
             _notificationSubject.SendNotifications($"Sprint: '{_context.Name}' is closed");
         }
     }

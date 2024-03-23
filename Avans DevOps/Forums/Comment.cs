@@ -1,6 +1,6 @@
 ﻿using Avans_DevOps.Models;
 
-namespace Avans_DevOps.Forum
+namespace Avans_DevOps.Forums
 {
     public class Comment
     {

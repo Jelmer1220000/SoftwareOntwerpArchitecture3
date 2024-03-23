@@ -1,4 +1,5 @@
-﻿using Avans_DevOps.Models;
+﻿using Avans_DevOps.Forums;
+using Avans_DevOps.Models;
 using Avans_DevOps.Notifications;
 using System;
 using System.Collections.Generic;
@@ -25,9 +26,12 @@ namespace Avans_DevOps.Items.ItemStates
         {
             _context.ToTodoState();
 
-            //TODO
-            //Notificatie naar Scrum Master.
             _notificationSubject.SendNotifications($"{_context.Name} is back to TODO");
+        }
+
+        public override void StartThread(string title, string description, User user)
+        {
+            _context.Thread = new AThread(title, description, _context, _context.Forum, user);
         }
 
         public override void ToTested()
