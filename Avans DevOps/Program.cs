@@ -1,14 +1,11 @@
 ﻿using Avans_DevOps;
 using Avans_DevOps.Forums;
-using Avans_DevOps.Items;
 using Avans_DevOps.Models;
 using Avans_DevOps.Models.UserRoles;
-using Avans_DevOps.Notifications;
 using Avans_DevOps.Notifications.NotificationServices;
 using Avans_DevOps.Pipelines.PipelineActions.AnalyseActions;
 using Avans_DevOps.Pipelines.PipelineActions.AnalyseComponents;
 using Avans_DevOps.Pipelines.PipelineActions.BuildComponents;
-using Avans_DevOps.Pipelines.PipelineActions.DeployComponents;
 using Avans_DevOps.Pipelines.PipelineActions.SourceActions;
 using Avans_DevOps.Pipelines.PipelineActions.SourceComponents;
 using Avans_DevOps.Pipelines.PipelineActions.TestActions;
@@ -20,14 +17,12 @@ using Avans_DevOps.Pipelines.PipelineComponents.UtilityComponents;
 using Avans_DevOps.Sprints.SprintFactory;
 using Avans_DevOps.VersionControl;
 using Avans_DevOps.VersionControl.Factory;
-using Avans_DevOps.Visitor;
 using Microsoft.Extensions.DependencyInjection;
-using System.Security;
-
 
 IServiceProvider serviceProvider = AvansDevOpsServiceCollection.BuildServiceProvider();
 
-////// Pipeline demo ////
+
+//----------------Pipeline------------------
 var pipeline = new Pipeline("Pipeline");
 
 //Source
@@ -69,32 +64,48 @@ utility.AddAction(commando2);
 utility.AddAction(commando3);
 pipeline.AddComponent(utility);
 
+//----------------Pipeline-----------------------
+
+//----------------Project gebruikers-------------
 var productOwner = new ProductOwner("ProductOwner");
 var tester = new Tester("Tester1");
 var scrumMaster = new ScrumMaster("Scrum Master");
 var developer1 = new Developer("Developer1");
+//----------------Project gebruikers-------------
 
+//----------------Notificaties-------------------
+
+// Product owner notificaties
 //productOwner.AddNotificationPreference(new SlackNotificationsService());
 //productOwner.AddNotificationPreference(new MailNotificationsService());
 
-scrumMaster.AddNotificationPreference(new MailNotificationsService());
-developer1.AddNotificationPreference(new MailNotificationsService());
+// Notificaties voor scrumMaster op gebied van Items en voor Threads
+//scrumMaster.AddNotificationPreference(new MailNotificationsService());
+//developer1.AddNotificationPreference(new MailNotificationsService());
+
+// Notificaties voor testers wanneer item in ReadyForTesting komt
 //tester.AddNotificationPreference(new SlackNotificationsService());
 //tester.AddNotificationPreference(new MailNotificationsService());
 
+//----------------Notificaties-------------------
+
+//--------------Factories dependency injection---
 var sprintFactory = serviceProvider.GetService<ISprintFactory>();
 var versionControlFactory = serviceProvider.GetService<IVersionControlFactory>();
+//--------------Factories dependency injection---
+
+//----------------Project opzet------------------
 var project = new Project("Kramse", productOwner, sprintFactory, VersionControlTypes.Git, versionControlFactory);
 var versionController = project.GetVersionController();
 project.AddTester(tester);
 project.AddDeveloper(developer1);
 project.SetScrumMaster(scrumMaster);
+//----------------Project opzet------------------
 
 var forum = project.GetForum();
-
 project.CreateSprint(SprintType.ReviewSprint, "Sprint 1", new DateOnly(2024, 1, 10), new DateOnly(2024, 1, 24), pipeline, forum);
 
-
+//----------------Sprint opzet-------------------
 var sprint1 = project.GetSprintByName("Sprint 1");
 project.AddItemToProjectBackLog("userinterface", "Test item1");
 project.AddItemToProjectBackLog("authentication", "Test item2");
@@ -103,19 +114,22 @@ var projectBacklog = project.GetBacklog();
 var item1 = projectBacklog[0];
 var item2 = projectBacklog[1];
 var item3 = projectBacklog[2];
+//----------------Sprint opzet-------------------
 
 
+
+//------------------Threads----------------------
 item1.StartThread("Interface", "Interface heeft geen API call", developer1);
-
 var thread = item1.GetThread();
 
 item2.StartThread("Authenticatie", "Authenticatie werkt niet!", scrumMaster);
-
 var thread2 = item2.GetThread();
 
-
+//Comments op beide threads
 var comment = new Comment(scrumMaster, "API call bestaat maar valt onder security");
 var comment2 = new Comment(developer1, "Authenticatie moet nog aangepast worden naar de nieuwe versie");
+
+//Reacties op de comments
 var reaction = new Comment(developer1, "OK");
 var reaction2 = new Comment(productOwner, "Leg hier even prioriteit op a.u.b");
 
@@ -125,12 +139,20 @@ thread.ReactOnComment(comment, reaction);
 thread2.ReactToThread(comment2);
 thread2.ReactOnComment(comment2, reaction2);
 
+//------------------Threads----------------------
+
+//------------------Activities-------------------
 Activity activity = new Activity();
 item1.AddActivity(activity);
+//------------------Activities-------------------
 
+//--------------------Items----------------------
 sprint1.AddItemToSprintBacklog(item1, true);
 sprint1.AddItemToSprintBacklog(item2, false);
+//--------------------Items----------------------
 
+
+//---------------------Git-----------------------
 versionController.CheckOut("feature-userinterface".ToLower());
 versionController.Commit("Small button added");
 versionController.Commit("Large button added");
@@ -138,7 +160,9 @@ versionController.ListCommitsForRepository("feature-userinterface".ToLower(), Re
 versionController.ListCommitsForRepository("feature-userinterface".ToLower(), RepoTypes.Remote);
 versionController.Push();
 versionController.ListCommitsForRepository("feature-userinterface".ToLower(), RepoTypes.Remote);
+//---------------------Git-----------------------
 
+//-------------------Sprint----------------------
 sprint1.NextSprintState();
 //sprint1.AddItemToSprintBacklog(item3, true);
 
@@ -153,12 +177,15 @@ item1.ToDoneState();
 //Bij release Pipeline wordt gestart zodra sprint state naar release gaat, bij review wordt een file verwacht.
 sprint1.NextSprintState();
 sprint1.NextSprintState();
+
 var sevenItems = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 };
-
 sprint1.UploadReview(scrumMaster, sevenItems);
+//-------------------Sprint----------------------
 
+//----------------Thread test--------------------
 foreach (var Thread in forum.GetAllThreads())
 {
     Console.WriteLine($"Thread in forum: {Thread.Title}");
 }
+//----------------Thread test--------------------
 
