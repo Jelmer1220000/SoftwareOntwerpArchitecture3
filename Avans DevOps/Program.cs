@@ -16,12 +16,15 @@ using Avans_DevOps.Pipelines.PipelineComponents.AnalyseComponents.SonarQubeActio
 using Avans_DevOps.Pipelines.PipelineComponents.PackageComponents;
 using Avans_DevOps.Pipelines.PipelineComponents.UtilityComponents;
 using Avans_DevOps.Sprints.SprintFactory;
+using Avans_DevOps.VersionControl;
+using Avans_DevOps.VersionControl.Factory;
 using Microsoft.Extensions.DependencyInjection;
+using System.Security;
 
 
 IServiceProvider serviceProvider = AvansDevOpsServiceCollection.BuildServiceProvider();
 
-//// Pipeline demo ////
+////// Pipeline demo ////
 var pipeline = new Pipeline("Pipeline");
 
 //Source
@@ -67,43 +70,56 @@ var productOwner = new User("ProductOwner");
 var tester = new User("Tester1");
 var scrumMaster = new User("Scrum Master");
 
-productOwner.AddNotificationPreference(new SlackNotificationsService());
-productOwner.AddNotificationPreference(new MailNotificationsService());
+//productOwner.AddNotificationPreference(new SlackNotificationsService());
+//productOwner.AddNotificationPreference(new MailNotificationsService());
 
-scrumMaster.AddNotificationPreference(new MailNotificationsService());
+//scrumMaster.AddNotificationPreference(new MailNotificationsService());
 
-tester.AddNotificationPreference(new SlackNotificationsService());
-tester.AddNotificationPreference(new MailNotificationsService());
+//tester.AddNotificationPreference(new SlackNotificationsService());
+//tester.AddNotificationPreference(new MailNotificationsService());
 
 var sprintFactory = serviceProvider.GetService<ISprintFactory>();
-var project = new Project("Kramse", productOwner, sprintFactory);
-
+var versionControlFactory = serviceProvider.GetService<IVersionControlFactory>();
+var project = new Project("Kramse", productOwner, sprintFactory, VersionControlTypes.Git, versionControlFactory);
+var versionController = project.GetVersionController();
 project.AddTester(tester);
 project.SetScrumMaster(scrumMaster);
-
 project.CreateSprint(SprintType.ReleaseSprint, "Sprint 1", new DateOnly(2024, 1, 10), new DateOnly(2024, 1, 24), pipeline);
 
 var sprint1 = project.GetSprintByName("Sprint 1");
+project.AddItemToProjectBackLog("userinterface", "Test item1");
+project.AddItemToProjectBackLog("authentication", "Test item2");
+project.AddItemToProjectBackLog("logic", "Test item3");
+var projectBacklog = project.GetBacklog();
+var item1 = projectBacklog[0];
+var item2 = projectBacklog[1];
+var item3 = projectBacklog[2];
 
-Item item = new Item("Item1", "Test item");
-
-Item item2 = new Item("Item2", "Test item");
 Activity activity = new Activity();
-item.AddActivity(activity);
+item1.AddActivity(activity);
 
-sprint1.AddItemToSprintBacklog(item);
-sprint1.AddItemToSprintBacklog(item2);
+
+sprint1.AddItemToSprintBacklog(item1, true);
+sprint1.AddItemToSprintBacklog(item2, false);
+
+versionController.CheckOut("feature-userinterface".ToLower());
+versionController.Commit("Small button added");
+versionController.Commit("Large button added");
+versionController.ListCommitsForRepository("feature-userinterface".ToLower(), RepoTypes.Local);
+versionController.ListCommitsForRepository("feature-userinterface".ToLower(), RepoTypes.Remote);
+versionController.Push();
+versionController.ListCommitsForRepository("feature-userinterface".ToLower(), RepoTypes.Remote);
 
 sprint1.NextSprintState();
+//sprint1.AddItemToSprintBacklog(item3, true);
 
 //Naar doing.
-item.ToDoingState();
+item1.ToDoingState();
 
 //Notificatie naar testers
-item.ToReadyForTestingState();
+item1.ToReadyForTestingState();
 
-
-item.ToDoneState();
+item1.ToDoneState();
 
 //Bij release Pipeline wordt gestart zodra sprint state naar release gaat.
 sprint1.NextSprintState();

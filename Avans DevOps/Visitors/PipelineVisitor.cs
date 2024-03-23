@@ -88,7 +88,7 @@ namespace Avans_DevOps.Visitor
         public void Visit(SourceAzure sourceAzure)
         {
             //TEST PIPELINE FAIL
-            throw new InvalidOperationException("Azure not found");
+            //throw new InvalidOperationException("Azure not found");
             Console.WriteLine(sourceAzure.Execute());
         }
 

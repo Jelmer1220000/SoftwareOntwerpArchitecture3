@@ -8,29 +8,27 @@ namespace Avans_DevOps.Items
     {
         protected ItemState _itemState { get; set; }
 
-        private Backlog _backlog;
         private Project _project;
         public Guid Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public IList<Activity> Activities { get; set; }
 
-        public Item(string name, string description)
+
+
+        public Item(string name, string description, Project project)
         {
             Name = name;
             Description = description;
             this._itemState = new TodoState(this);
             Activities = [];
+            _project = project;
         }
 
-        public void SetBacklog(Backlog backlog)
-        {
-            _backlog = backlog;
-        }
 
         public Project GetProject()
         {
-            return _backlog.GetSprint().GetProject();
+            return _project;
         }
 
         public IList<User> GetTesters()

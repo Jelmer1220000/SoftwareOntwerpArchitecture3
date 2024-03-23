@@ -1,6 +1,10 @@
-﻿using Avans_DevOps.Pipelines.PipelineComponents;
+﻿using Avans_DevOps.Items;
+using Avans_DevOps.Pipelines.PipelineComponents;
 using Avans_DevOps.Sprints;
 using Avans_DevOps.Sprints.SprintFactory;
+using Avans_DevOps.VersionControl;
+using Avans_DevOps.VersionControl.Factory;
+using Avans_DevOps.VersionControl.Strategies;
 
 namespace Avans_DevOps.Models
 {
@@ -14,18 +18,42 @@ namespace Avans_DevOps.Models
         private IList<User> _testers;
         private IList<Sprint> _sprints;
         private ISprintFactory _sprintFactory;
+        private IVersionControlFactory _versionControlFactory;
+        private IVersionControl _versionControl;
+        private IList<Item> _projectBacklog;
 
 
-        public Project(string name, User productOwner, ISprintFactory sprintFactory)
+        public Project(string name, User productOwner, ISprintFactory sprintFactory, VersionControlTypes type, IVersionControlFactory versionControlFactory)
         {
             _Name = name;
             _productOwner = productOwner;
             _developers = [];
             _sprints = [];
             _testers = [];
+            _projectBacklog = [];
             _sprintFactory = sprintFactory;
+            _versionControlFactory = versionControlFactory;
+            _versionControl = _versionControlFactory.CreateVersionControl(type);
         }
 
+
+
+        //Maakt een item aan voegt deze toe aan de backlog van het project.
+        public void AddItemToProjectBackLog(string name, string desciption)
+        {
+            var item = new Item(name, desciption, this);
+            _projectBacklog.Add(item);
+        }
+
+        public IList<Item> GetBacklog()
+        {
+            return _projectBacklog;
+        }
+
+        public IVersionControl GetVersionController()
+        {
+            return _versionControl;
+        }
 
         public void AddDeveloper(User developer)
         {
@@ -59,7 +87,7 @@ namespace Avans_DevOps.Models
 
         public void CreateSprint(SprintType type, string name, DateOnly startDate, DateOnly endDate, Pipeline pipeline)
         {
-            var newSprint = _sprintFactory.CreateSprint(type, name, startDate, endDate, this, pipeline);
+            var newSprint = _sprintFactory.CreateSprint(type, name, startDate, endDate, this, pipeline, _versionControl);
             _sprints.Add(newSprint);
         }
 
