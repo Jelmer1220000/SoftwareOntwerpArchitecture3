@@ -149,8 +149,8 @@ item1.AddActivity(activity);
 //------------------Activities-------------------
 
 //--------------------Items----------------------
-sprint1.AddItemToSprintBacklog(item1, true);
-sprint1.AddItemToSprintBacklog(item2, false);
+sprint1.AddItemToSprintBacklog(item1, 3, true);
+sprint1.AddItemToSprintBacklog(item2, 2, false);
 //--------------------Items----------------------
 
 
@@ -185,13 +185,7 @@ var sevenItems = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 };
 sprint1.UploadReview(scrumMaster, sevenItems);
 //-------------------Sprint----------------------
 
-var footer = new Footer("<>< Fish", "Progres rapport", "Kramse", "1.0", new DateOnly(2024, 1, 24));
-var header = new Header("<>< Fish", "Progres rapport", "Kramse", "1.0", new DateOnly(2024, 1, 24));
-var body = new Body();
-body.AddSprint(sprint1);
 
-var PDFDoc = rapportFactory.CreateRapport(footer, header, body, Avans_DevOps.Rapport.Document.Document.RapportTypes.PDF);
-Console.WriteLine(PDFDoc);
 
 
 //----------------Thread test--------------------
@@ -201,3 +195,13 @@ foreach (var Thread in forum.GetAllThreads())
 }
 //----------------Thread test--------------------
 
+
+//----------------Rapport test-------------------
+var footer = new Footer("<>< Fish", "Progres rapport", "Kramse", "1.0", new DateOnly(2024, 1, 24));
+var header = new Header("<>< Fish", "Progres rapport", "Kramse", "1.0", new DateOnly(2024, 1, 24));
+var body = new Body();
+body.AddSprint(sprint1);
+
+var PDFDoc = rapportFactory.CreateRapport(footer, header, body, Avans_DevOps.Rapport.Document.Document.RapportTypes.PDF);
+Console.WriteLine(PDFDoc);
+//----------------Rapport test-------------------

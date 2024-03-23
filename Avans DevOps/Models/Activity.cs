@@ -2,6 +2,8 @@
 {
     public class Activity
     {
+        public string name { get; set; } = "";
+        public string description { get; set; } = "";
         private bool _isDone = false;
 
         
