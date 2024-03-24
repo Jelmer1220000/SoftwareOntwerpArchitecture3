@@ -51,14 +51,14 @@ namespace Avans_DevOps.Sprints
         {
             if (!_isLocked)
             {
-                this._sprintState = state;
-                this._sprintState.OnEnter();
+                _sprintState = state;
+                _sprintState.OnEnter();
             }
         }
 
         public Project GetProject()
         {
-            return this._project;
+            return _project;
         }
 
         //Gaat naar de volgende state.
@@ -67,8 +67,9 @@ namespace Avans_DevOps.Sprints
         //Staat een visitor toe vanuit de states (voor Review/Release sprint)
         internal abstract void AcceptVisitor(ISprintVisitor visitor);
 
-        public void AddItemToSprintBacklog(Item item, bool withBranch)
+        public void AddItemToSprintBacklog(Item item, int storyPoints, bool withBranch)
         {
+            item.SetStoryPoints(storyPoints);
             _sprintState.AddItem(item);
             if (withBranch)
             {

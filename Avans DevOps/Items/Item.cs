@@ -12,9 +12,10 @@ namespace Avans_DevOps.Items
         private Project _project;
         public Guid Id { get; set; }
         public string Name { get; set; }
+        public int StoryPoints { get; set; }
         public string Description { get; set; }
         public IList<Activity> Activities { get; set; }
-        private User? _user { get; set; }
+        public User? User { get; set; }
 
         public AThread? Thread;
         public readonly AForum Forum;
@@ -27,6 +28,17 @@ namespace Avans_DevOps.Items
             Activities = [];
             _project = project;
             Forum = forum;
+        }
+
+        public void SetStoryPoints(int points)
+        {
+            if (points > 0)
+            {
+                StoryPoints = points;
+            } else
+            {
+                throw new Exception("storypoints kunnen niet negatief zijn");
+            }
         }
 
 
@@ -91,7 +103,7 @@ namespace Avans_DevOps.Items
         {
             if (user == null) 
             {
-                this._user = user;
+                this.User = user;
             }
 
            this._itemState = new DoingState(this);

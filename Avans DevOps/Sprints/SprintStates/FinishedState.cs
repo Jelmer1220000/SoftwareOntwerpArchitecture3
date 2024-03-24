@@ -1,4 +1,5 @@
-﻿using Avans_DevOps.Visitor;
+﻿using Avans_DevOps.Sprints;
+using Avans_DevOps.Visitor;
 
 namespace Avans_DevOps.Sprints.SprintStates
 {

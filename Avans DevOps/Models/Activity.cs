@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Avans_DevOps.Models
+﻿namespace Avans_DevOps.Models
 {
     public class Activity
     {
+        public string name { get; set; } = "";
+        public string description { get; set; } = "";
         private bool _isDone = false;
 
         

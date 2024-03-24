@@ -27,12 +27,12 @@ namespace Avans_DevOps.Sprints.SprintStates
 
         public virtual void NextState()
         {
-           throw new InvalidOperationException("Het is niet mogelijk om naar de volgende fase van de sprint te gaan.");
+            throw new InvalidOperationException("Het is niet mogelijk om naar de volgende fase van de sprint te gaan.");
         }
 
         public virtual void OnEnter()
         {
-            Console.WriteLine("Sprint entered: " + this.GetType().Name);
+            Console.WriteLine("Sprint entered: " + GetType().Name);
         }
     }
 }
