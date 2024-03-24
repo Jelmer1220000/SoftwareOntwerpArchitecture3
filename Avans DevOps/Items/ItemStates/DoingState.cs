@@ -1,4 +1,7 @@
-﻿namespace Avans_DevOps.Items.ItemStates
+﻿using Avans_DevOps.Forums;
+using Avans_DevOps.Models;
+
+namespace Avans_DevOps.Items.ItemStates
 {
     public class DoingState : ItemState
     {
@@ -13,6 +16,11 @@
         public override void ToReadyForTesting()
         {
             _context.ToReadyForTestingState();
+        }
+
+        public override void StartThread(string title, string description, User user)
+        {
+            _context.Thread = new AThread(title, description, _context, _context.Forum, user);
         }
     }
 }

@@ -13,7 +13,13 @@ namespace Avans_DevOps.Items.ItemStates
         public DoneState(Item context)
         {
             _context = context;
-            this.OnEnter(_context);
+            OnEnter(context);
+        }
+
+        public override void OnEnter(Item item)
+        {
+            base.OnEnter(item);
+            if (_context.Thread != null) _context.CloseThread();
         }
     }
 }

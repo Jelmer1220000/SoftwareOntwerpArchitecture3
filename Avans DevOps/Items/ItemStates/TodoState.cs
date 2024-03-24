@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Avans_DevOps.Forums;
+using Avans_DevOps.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,9 +19,21 @@ namespace Avans_DevOps.Items.ItemStates
             this.OnEnter(_context);
         }
 
-        public override void ToDoing()
+        public override void ToDoing(User user)
         {
-            _context.ToDoingState();
+            _context.ToDoingState(user);
+        }
+
+        public override void StartThread(string title, string description, User user)
+        {
+            _context.Thread = new AThread(title, description, _context, _context.Forum, user);
+        }
+
+        public override void OnEnter(Item item)
+        {
+            base.OnEnter(item);
+
+            if (_context.Thread != null) _context.OpenThread();
         }
     }
 }

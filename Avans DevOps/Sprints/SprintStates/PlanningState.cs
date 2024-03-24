@@ -1,4 +1,7 @@
+using Avans_DevOps.Items;
+using Avans_DevOps.Sprints;
 ﻿using Avans_DevOps.Items;
+using Avans_DevOps.Notifications;
 
 namespace Avans_DevOps.Sprints.SprintStates
 {
@@ -20,6 +23,13 @@ namespace Avans_DevOps.Sprints.SprintStates
         public override void RemoveItem(Item item)
         {
             _context._sprintBackLog.Remove(item);
+        }
+
+        public override void ChangeProperties(string name, DateOnly startDate, DateOnly endDate)
+        {
+            _context.Name = name;
+            _context.StartDate = startDate;
+            _context.EndDate = endDate;
         }
 
         public override void NextState()

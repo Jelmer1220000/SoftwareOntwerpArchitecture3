@@ -1,4 +1,4 @@
-﻿using Avans_DevOps.Pipelines.Visitor;
+﻿using Avans_DevOps.Visitor;
 using System;
 using System.Collections.Generic;
 using System.Linq;

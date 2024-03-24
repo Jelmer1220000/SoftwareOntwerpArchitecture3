@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Avans_DevOps.Notifications
+namespace Avans_DevOps.Notifications.NotificationServices
 {
     public interface INotificationService<T>
     {
-        public void SendNotification(T value);
+        public void SendNotification(T value, T name);
     }
 }

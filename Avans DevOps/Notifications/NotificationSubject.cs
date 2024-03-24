@@ -1,31 +1,49 @@
 ﻿using Avans_DevOps.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Avans_DevOps.Notifications
 {
     public class NotificationSubject : ISubject
     {
-        private IList<ISubscriber> _subscribers = [];
-        public void AddSubscriber(TeamMember member)
+        private IList<Subscriber> _subscribers = [];
+
+        public void AddSubscriber(User member)
         {
             _subscribers.Add(member);
         }
 
-        public void RemoveSubscriber(TeamMember member)
+        public void RemoveSubscriber(User member)
         {
             _subscribers.Remove(member);
         }
 
-        public void SendNotifications()
+        public void SendItemUpdate(string text)
         {
-            foreach (var member in _subscribers)
-            {
-                member.Update();
-            }
+            foreach(var member in _subscribers) member.ItemUpdate(text);
+        }
+
+        public void SendThreadUpdate(string text)
+        {
+            foreach (var member in _subscribers) member.ThreadUpdate(text);
+        }
+
+        public void SendSprintUpdate(string text)
+        {
+            foreach (var member in _subscribers) member.SprintUpdate(text);
+        }
+
+        public void SendProductOwnerUpdate(string text)
+        {
+            foreach (var member in _subscribers) member.ProductOwnerUpdate(text);
+        }
+
+        public void SendScrumMasterUpdate(string text)
+        {
+            foreach (var member in _subscribers) member.ScrumMasterUpdate(text);
+        }
+
+        public void SendTestersUpdate(string text)
+        {
+            foreach (var member in _subscribers) member.TestersUpdate(text);
         }
     }
 }

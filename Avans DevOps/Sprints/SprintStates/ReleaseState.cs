@@ -1,4 +1,9 @@
-﻿using Avans_DevOps.Items;
+
+using Avans_DevOps.Models;
+using Avans_DevOps.Notifications;
+using Avans_DevOps.Sprints;
+using Avans_DevOps.Pipelines.PipelineComponents;
+using Avans_DevOps.Visitor;
 
 namespace Avans_DevOps.Sprints.SprintStates
 {
@@ -16,11 +21,21 @@ namespace Avans_DevOps.Sprints.SprintStates
             _context.ChangeState(new ClosedState(_context));
         }
 
-        public override void OnEnter()
+        public override void RunPipeline(User user, bool fail)
         {
-            Console.WriteLine("Sprint entered: " + this.GetType().Name);
-            //TODO
-            // Run pipeline
+            if (!fail) { 
+                _context.Pipeline.AcceptVisitor(new PipelineVisitor());
+                NextState();
+            } else
+            {
+                _context.UpdateScrumMaster($"Pipeline for sprint: '{_context.Name}' failed");
+
+                //TRY AGAIN OR CANCEL PIPELINE
+                Console.WriteLine("Try again? Yes/No");
+
+                //string tryAgain = Console.ReadLine()!;
+                //if (tryAgain == "Yes") RunPipeline(user, false);
+            }
         }
     }
 }

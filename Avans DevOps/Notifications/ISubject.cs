@@ -9,10 +9,19 @@ namespace Avans_DevOps.Notifications
 {
     public interface ISubject
     {
-        public void AddSubscriber(TeamMember member);
+        public void AddSubscriber(User member);
 
-        public void RemoveSubscriber(TeamMember member);
+        public void RemoveSubscriber(User member);
 
-        public void SendNotifications();
+        public void SendThreadUpdate(string text);
+
+        public void SendItemUpdate(string text);
+
+        public void SendProductOwnerUpdate(string text);
+
+        public void SendScrumMasterUpdate(string text);
+        public void SendTestersUpdate(string text);
+
+        public void SendSprintUpdate(string text);
     }
 }

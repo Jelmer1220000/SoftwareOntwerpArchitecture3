@@ -1,5 +1,3 @@
-﻿using Avans_DevOps.Items;
-
 namespace Avans_DevOps.Sprints.SprintStates
 {
     public class RunningState : SprintState
