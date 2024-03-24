@@ -184,12 +184,7 @@ item1.ToDoneState();
 sprint1.NextSprintState();
 sprint1.NextSprintState();
 
-<<<<<<< Updated upstream
 var rapportFactory = serviceProvider.GetService<IRapportFactory>();
-=======
-//sprint1.RunPipeline(scrumMaster, false);
-
->>>>>>> Stashed changes
 var sevenItems = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 };
 sprint1.UploadReview(scrumMaster, sevenItems);
 //-------------------Sprint----------------------

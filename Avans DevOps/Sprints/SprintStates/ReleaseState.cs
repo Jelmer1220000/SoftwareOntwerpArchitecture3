@@ -1,11 +1,7 @@
-<<<<<<< Updated upstream
+
 using Avans_DevOps.Models;
 using Avans_DevOps.Notifications;
 using Avans_DevOps.Sprints;
-=======
-﻿using Avans_DevOps.Models;
-using Avans_DevOps.Notifications;
->>>>>>> Stashed changes
 using Avans_DevOps.Pipelines.PipelineComponents;
 using Avans_DevOps.Visitor;
 
