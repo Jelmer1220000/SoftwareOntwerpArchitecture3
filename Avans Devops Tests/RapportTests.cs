@@ -26,7 +26,7 @@ namespace Avans_Devops_Tests
             var dateEnd = DateOnly.Parse("24-03-2024");
             var project = new Project("Kramse", productOwner, sprintFactory.Object, VersionControlTypes.Git, versionControlFactory.Object);
             var sprint = new ReleaseSprint("ReleaseTest", dateStart, dateEnd, project, pipeline, project.GetVersionController(), scrumMaster, project.GetForum());
-            var rapportFactory = new Mock<RapportFactory>();
+            var rapportFactory = new RapportFactory();
 
             //Act
             var footer = new Footer("<>< Fish", "Progres rapport", "Kramse", "1.0", new DateOnly(2024, 1, 24));
@@ -34,13 +34,12 @@ namespace Avans_Devops_Tests
             var body = new Body();
             body.AddSprint(sprint);
 
-            var png = new PNGRapport(header, body, footer);
-
-/*            rapportFactory.Setup(c => c.CreateRapport(footer, header, body, RapportTypes.PNG)).Returns(png.Generate());
-            var PngDoc = rapportFactory.Object.CreateRapport(footer, header, body, RapportTypes.PNG);*/
+            string pdfRapport = rapportFactory.CreateRapport(footer, header, body, RapportTypes.PDF);
 
             //Assert
-     /*       rapportFactory.Verify(c => c.CreateRapport(footer, header, body, RapportTypes.PNG), Times.Once);*/
+            Assert.IsType<string>(pdfRapport);
         }
+
+
     }
 }

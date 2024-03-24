@@ -2,8 +2,8 @@
 {
     public class GitStrategy : IVersionControlStrategy
     {
-        private Dictionary<string, List<string>> _localRepository = new Dictionary<string, List<string>>();
-        private Dictionary<string, List<string>> _remoteRepository = new Dictionary<string, List<string>>();
+        public Dictionary<string, List<string>> _localRepository = new Dictionary<string, List<string>>();
+        public Dictionary<string, List<string>> _remoteRepository = new Dictionary<string, List<string>>();
         private string _currentBranch;
 
         public GitStrategy(string mainBranch = "main")
@@ -36,7 +36,7 @@
             }
             else
             {
-                Console.WriteLine($"GIT: Branch '{branchName}' already exists in the local repository.");
+                throw new InvalidOperationException($"GIT: Branch '{branchName}' already exists in the local repository.");
             }
         }
 

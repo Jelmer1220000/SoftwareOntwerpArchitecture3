@@ -1,4 +1,5 @@
-﻿using Avans_DevOps.Pipelines.PipelineActions.AnalyseActions;
+﻿using Avans_DevOps.Pipelines;
+using Avans_DevOps.Pipelines.PipelineActions.AnalyseActions;
 using Avans_DevOps.Pipelines.PipelineActions.AnalyseComponents;
 using Avans_DevOps.Pipelines.PipelineActions.BuildComponents;
 using Avans_DevOps.Pipelines.PipelineActions.DeployComponents;
@@ -36,5 +37,6 @@ namespace Avans_DevOps.Visitor
         void Visit(NUnitTests nUnitTests);
         void Visit(Package package);
         void Visit(Utility utility);
+
     }
 }

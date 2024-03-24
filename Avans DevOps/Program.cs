@@ -27,7 +27,7 @@ IServiceProvider serviceProvider = AvansDevOpsServiceCollection.BuildServiceProv
 //----------------Pipeline------------------
 var pipeline = new Pipeline("Pipeline");
 
-/*//Source
+//Source
 var source = new SourceContainer("SourceContainer");
 var azureSource = new SourceAzure("SourceAzure");
 source.AddComponent(azureSource);
@@ -207,5 +207,5 @@ var body = new Body();
 body.AddSprint(sprint1);
 
 var PDFDoc = rapportFactory.CreateRapport(footer, header, body, Avans_DevOps.Rapport.Document.Document.RapportTypes.PDF);
-Console.WriteLine(PDFDoc);*/
+Console.WriteLine(PDFDoc);
 //----------------Rapport test-------------------
