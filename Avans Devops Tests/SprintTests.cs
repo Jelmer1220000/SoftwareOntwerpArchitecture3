@@ -36,10 +36,6 @@ namespace Avans_Devops_Tests
             var sprint2 = new ReviewSprint("ReviewSprint", dateStart, dateEnd, project, pipeline, project.GetVersionController(), scrumMaster, project.GetForum());
 
             //Act
-            sprint.InjectNotificationService(new NotificationSubject());
-            sprint.ChangeState(new PlanningState(sprint));
-            sprint.ChangeProperties("ReleaseSprint", dateStart, dateEnd);
-            sprint.GetProject();
 
             sprintFactory.Setup(s => s.CreateSprint(SprintType.ReleaseSprint, It.IsAny<string>(), It.IsAny<DateOnly>(), It.IsAny<DateOnly>(), project, pipeline, It.IsAny<IVersionControl>(), It.IsAny<ScrumMaster>(), project.GetForum())).Returns(sprint);
             project.CreateSprint(SprintType.ReleaseSprint, "ReleaseTest", dateStart, dateEnd, pipeline, project.GetForum());
