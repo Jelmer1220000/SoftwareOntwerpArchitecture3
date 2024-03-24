@@ -21,7 +21,7 @@ using Avans_DevOps.VersionControl;
 using Avans_DevOps.VersionControl.Factory;
 using Microsoft.Extensions.DependencyInjection;
 
-IServiceProvider serviceProvider = AvansDevOpsServiceCollection.BuildServiceProvider();
+/*IServiceProvider serviceProvider = AvansDevOpsServiceCollection.BuildServiceProvider();
 
 
 //----------------Pipeline------------------
@@ -208,4 +208,4 @@ body.AddSprint(sprint1);
 
 var PDFDoc = rapportFactory.CreateRapport(footer, header, body, Avans_DevOps.Rapport.Document.Document.RapportTypes.PDF);
 Console.WriteLine(PDFDoc);
-//----------------Rapport test-------------------
+//----------------Rapport test-------------------*/
