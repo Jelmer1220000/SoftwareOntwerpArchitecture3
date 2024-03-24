@@ -8,6 +8,8 @@ using Avans_DevOps.Sprints;
 using Avans_DevOps.Sprints.SprintFactory;
 using Avans_DevOps.VersionControl.Factory;
 using Moq;
+using Avans_DevOps.VersionControl;
+using Avans_DevOps.VersionControl.Strategies;
 
 namespace Avans_Devops_Tests
 {
@@ -38,6 +40,30 @@ namespace Avans_Devops_Tests
 
             //Assert
             Assert.IsType<string>(pdfRapport);
+        }
+
+        [Fact]
+        public void GitStrategy_methods_kunnen_gecalled_worden()
+        {
+            //Arrange
+            var gitStrategy = new GitStrategy();
+            var sprintFactory = new Mock<ISprintFactory>();
+            var pipeline = new Pipeline("Pipeline1");
+            var productOwner = new ProductOwner("Jelmer");
+            var scrumMaster = new ScrumMaster("Quincy");
+            var dateStart = DateOnly.Parse("23-03-2024");
+            var dateEnd = DateOnly.Parse("24-03-2024");
+
+            gitStrategy.Branch("New branch");
+            gitStrategy.Pull("New branch");
+            gitStrategy.Branch("Second branch");
+            gitStrategy.Push();
+            gitStrategy.Checkout("New branch");
+            gitStrategy.Commit("New changes");
+            gitStrategy.ListCommitsForRepository("New branch", RepoTypes.Local);
+
+            //Assert
+            Assert.NotEmpty(gitStrategy._remoteRepository.Values);
         }
 
 
