@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Avans_DevOps.Notifications.NotificationServices;
+using Avans_DevOps.Notifications;
 
 namespace Avans_Devops_Tests
 {
@@ -43,6 +44,29 @@ namespace Avans_Devops_Tests
             //Assert
             Assert.Equal(preference, productOwner._preferences[0]);
             Assert.Equal(preference2, productOwner._preferences[1]);
+        }
+
+        [Fact]
+        public void Testers_krijgen_notificatie_als_item_naar_ready_for_testing_gaat()
+        {
+            //Arrange
+            var versionControlFactory = new Mock<IVersionControlFactory>();
+            var sprintFactory = new Mock<ISprintFactory>();
+            var productOwner = new ProductOwner("Jelmer");
+            var developer = new Developer("Quincy");
+
+            var notifications = new Mock<ISubject>();
+            //Act
+            var project = new Project("Kramse", productOwner, sprintFactory.Object, VersionControlTypes.Git, versionControlFactory.Object);
+            project.AddDeveloper(productOwner, developer);
+            project.AddItemToProjectBackLog("Item1", "Testing item creation");
+            var item1 = project.GetBacklog()[0];
+
+            item1.InjectNotificationsService(notifications.Object);
+
+            item1.ToReadyForTestingState();
+            //Assert
+            notifications.Verify(s => s.SendTestersUpdate(It.IsAny<string>()), Times.Once);
         }
     }
 }

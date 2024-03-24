@@ -6,7 +6,11 @@
         public string description { get; set; } = "";
         private bool _isDone = false;
 
-        
+        public Activity(string name, string description)
+        {
+            this.name = name;
+            this.description = description;
+        }
 
         public bool SetActivityState(bool  isDone)
         {

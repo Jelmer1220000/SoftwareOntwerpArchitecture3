@@ -7,7 +7,7 @@ namespace Avans_DevOps.Forums
 {
     public class AThread
     {
-        private ThreadCurrentState _threadState;
+        public ThreadCurrentState _threadState;
 
         public string Title;
         public string Description;

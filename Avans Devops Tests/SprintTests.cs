@@ -66,7 +66,7 @@ namespace Avans_Devops_Tests
             project.CreateSprint(SprintType.ReleaseSprint, "ReleaseTest", dateStart, dateEnd, pipeline, project.GetForum());
             project.AddItemToProjectBackLog("Item1", "Test item");
             var item = project.GetBacklog()[0];
-            sprint.AddItemToSprintBacklog(item, false);
+            sprint.AddItemToSprintBacklog(item, 5, false);
             //Assert
 
             Assert.Single(sprint._sprintBackLog);
@@ -95,7 +95,7 @@ namespace Avans_Devops_Tests
             project.AddItemToProjectBackLog("Item1", "Test item");
             var item = project.GetBacklog()[0];
 
-            var exception = Assert.Throws<InvalidOperationException>(() => sprint.AddItemToSprintBacklog(item, false));
+            var exception = Assert.Throws<InvalidOperationException>(() => sprint.AddItemToSprintBacklog(item, 5, false));
             //Assert
 
             Assert.NotNull(exception);

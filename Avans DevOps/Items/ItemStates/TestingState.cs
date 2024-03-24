@@ -22,9 +22,8 @@ namespace Avans_DevOps.Items.ItemStates
 
         public override void ToTodo()
         {
-            _context.ToTodoState();
-
            _context.UpdateScrumMaster($"{_context.Name} is back to TODO");
+           _context.ToTodoState();
         }
 
         public override void StartThread(string title, string description, User user)

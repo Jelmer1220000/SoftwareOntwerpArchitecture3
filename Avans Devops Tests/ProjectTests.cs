@@ -56,8 +56,6 @@ namespace Avans_Devops_Tests
             project.AddItemToProjectBackLog("Item1", "Testing item creation");
             //Assert
             Assert.Single(project.GetBacklog());
-            //TEST STORYPOINTS
-            //Assert.Equal(5, project.GetBacklog()[0].StoryPoints);
         }
     }
 }

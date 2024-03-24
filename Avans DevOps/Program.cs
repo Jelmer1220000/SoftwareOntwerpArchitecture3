@@ -148,7 +148,7 @@ thread2.ReactOnComment(comment2, reaction2);
 //------------------Threads----------------------
 
 //------------------Activities-------------------
-Activity activity = new Activity();
+Activity activity = new Activity("Subtaak", "Doe iets");
 item1.AddActivity(activity);
 //------------------Activities-------------------
 
