@@ -33,7 +33,6 @@ namespace Avans_Devops_Tests
             var dateEnd = DateOnly.Parse("24-03-2024");
             var project = new Project("Kramse", productOwner, sprintFactory.Object, VersionControlTypes.Git, versionControlFactory.Object);
             var sprint = new ReleaseSprint("ReleaseTest", dateStart, dateEnd, project, pipeline, project.GetVersionController(), scrumMaster, project.GetForum());
-            var sprint2 = new ReviewSprint("ReviewSprint", dateStart, dateEnd, project, pipeline, project.GetVersionController(), scrumMaster, project.GetForum());
           
             //Act
             sprintFactory.Setup(s => s.CreateSprint(SprintType.ReleaseSprint, It.IsAny<string>(), It.IsAny<DateOnly>(), It.IsAny<DateOnly>(), project, pipeline, It.IsAny<IVersionControl>(), It.IsAny<ScrumMaster>(), project.GetForum())).Returns(sprint);
@@ -41,7 +40,7 @@ namespace Avans_Devops_Tests
             project.SetScrumMaster(scrumMaster);
 
             //Assert
-            Assert.NotNull(project.GetSprintByName("ReleaseSprint"));
+            Assert.NotNull(project.GetSprintByName("ReleaseTest"));
             Assert.Equal(dateStart, project.GetSprintByName("ReleaseTest")!.StartDate);
             Assert.Equal(dateEnd, project.GetSprintByName("ReleaseTest")!.EndDate);
             Assert.Equal("ReleaseTest", project.GetSprintByName("ReleaseTest")!.Name);

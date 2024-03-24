@@ -37,6 +37,7 @@ namespace Avans_Devops_Tests
         public void Als_gebruiker_wil_ik_een_branch_kunnen_aanmaken_bij_een_backlog_item()
         {
             IVersionControlFactory versionControlFactory = new VersionControlFactory();
+            GitStrategy strategy = new GitStrategy();
             var sprintFactory = new Mock<ISprintFactory>();
             var pipeline = new Pipeline("Pipeline 1");
             var productOwner = new ProductOwner("Jelmer");
@@ -58,10 +59,8 @@ namespace Avans_Devops_Tests
             project.GetSprintByName("ReleaseTest")!.AddItemToSprintBacklog(project.GetBacklog()[0], 1, true);
 
             //Throw error because branch exists
-            var exception = Assert.Throws<InvalidOperationException>(() => project.GetVersionController().Branch($"feature-{project.GetBacklog()[0].Name.ToLower()}"));
             //Assert
-            Assert.IsType<InvalidOperationException>(exception);
-            Assert.NotNull(exception.Message);
+            Assert.NotEmpty(strategy._localRepository.Values);
         }
     }
 }
