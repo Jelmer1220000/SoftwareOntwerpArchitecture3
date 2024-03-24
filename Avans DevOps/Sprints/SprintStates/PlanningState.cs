@@ -1,5 +1,10 @@
+<<<<<<< Updated upstream
 using Avans_DevOps.Items;
 using Avans_DevOps.Sprints;
+=======
+﻿using Avans_DevOps.Items;
+using Avans_DevOps.Notifications;
+>>>>>>> Stashed changes
 
 namespace Avans_DevOps.Sprints.SprintStates
 {

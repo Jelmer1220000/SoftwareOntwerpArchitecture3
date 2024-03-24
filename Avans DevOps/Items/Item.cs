@@ -33,7 +33,6 @@ namespace Avans_DevOps.Items
             Forum = forum;
             _notificationSubject = new NotificationSubject();
         }
-
         public void SetStoryPoints(int points)
         {
             if (points > 0)
@@ -48,7 +47,6 @@ namespace Avans_DevOps.Items
         {
             _notificationSubject = notificationService;
         }
-
 
         public Project GetProject()
         {
@@ -124,10 +122,7 @@ namespace Avans_DevOps.Items
 
         public void ToDoingState(User user)
         {
-            if (this.User == null) 
-            {
-                this.User = user;
-            }
+            if (this.User == null)  this.User = user;
 
            this._itemState = new DoingState(this);
         }
