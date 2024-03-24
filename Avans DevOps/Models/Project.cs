@@ -63,9 +63,14 @@ namespace Avans_DevOps.Models
             return _versionControl;
         }
 
-        public void AddDeveloper(Developer developer)
+        public void AddDeveloper(ProductOwner owner, Developer userToAdd)
         {
-            _developers.Add(developer);
+            if (owner != null) _developers.Add(userToAdd);
+        }
+
+        public IList<Developer> GetDevelopers()
+        {
+            return this._developers;
         }
 
         public void AddTester(Tester tester)

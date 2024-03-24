@@ -1,3 +1,4 @@
+using Avans_DevOps.Models;
 using Avans_DevOps.Notifications;
 using Avans_DevOps.Sprints;
 using Avans_DevOps.Pipelines.PipelineComponents;
@@ -8,12 +9,10 @@ namespace Avans_DevOps.Sprints.SprintStates
     public class ReleaseState : SprintState
     {
         private readonly Sprint _context;
-        private NotificationSubject _notificationSubject = new NotificationSubject();
 
         public ReleaseState(Sprint sprint)
         {
             _context = sprint;
-            _notificationSubject.AddSubscriber(_context.GetProject().GetScrumMaster());
         }
 
         public override void NextState()
@@ -21,23 +20,20 @@ namespace Avans_DevOps.Sprints.SprintStates
             _context.ChangeState(new ClosedState(_context));
         }
 
-        public override void OnEnter()
+        public override void RunPipeline(User user, bool fail)
         {
-            Console.WriteLine("Sprint entered: " + GetType().Name);
-
-            try
-            {
+            if (!fail) { 
                 _context.Pipeline.AcceptVisitor(new PipelineVisitor());
                 NextState();
-            }
-            catch (Exception e)
+            } else
             {
-                _notificationSubject.SendNotifications($"Pipeline for sprint: '{_context.Name}' failed on: {e.Message}");
+                _context.UpdateScrumMaster($"Pipeline for sprint: '{_context.Name}' failed");
 
                 //TRY AGAIN OR CANCEL PIPELINE
                 Console.WriteLine("Try again? Yes/No");
-                string tryAgain = Console.ReadLine()!;
-                if (tryAgain == "Yes") OnEnter();
+
+                //string tryAgain = Console.ReadLine()!;
+                //if (tryAgain == "Yes") RunPipeline(user, false);
             }
         }
     }

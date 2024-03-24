@@ -2,6 +2,7 @@
 using Avans_DevOps.Items;
 using Avans_DevOps.Models;
 using Avans_DevOps.Models.UserRoles;
+using Avans_DevOps.Notifications;
 using Avans_DevOps.Pipelines.PipelineComponents;
 using Avans_DevOps.Sprints.SprintStates;
 using Avans_DevOps.VersionControl;
@@ -13,7 +14,7 @@ namespace Avans_DevOps.Sprints
     {
 
         protected SprintState _sprintState;
-        internal IList<Item> _sprintBackLog;
+        public IList<Item> _sprintBackLog;
 
         public Pipeline Pipeline;
         private Project _project;
@@ -25,6 +26,8 @@ namespace Avans_DevOps.Sprints
         private bool _isLocked;
         public DateOnly StartDate { get; set; }
         public DateOnly EndDate { get; set; }
+
+        private ISubject _notificationService;
 
         private ScrumMaster _scrumMaster;
         private AForum _forum;
@@ -44,6 +47,12 @@ namespace Avans_DevOps.Sprints
             _sprintBackLog = [];
             _sprintState = new PlanningState(this);
             _forum = forum;
+            _notificationService = new NotificationSubject();
+        }
+
+        public void InjectNotificationService(ISubject notificationService)
+        {
+            _notificationService = notificationService;
         }
 
         //Veranderd de state van de huidige context.
@@ -54,6 +63,11 @@ namespace Avans_DevOps.Sprints
                 _sprintState = state;
                 _sprintState.OnEnter();
             }
+        }
+
+        public void ChangeProperties(string name, DateOnly startDate, DateOnly endDate)
+        {
+            this._sprintState.ChangeProperties(name, startDate, endDate);
         }
 
         public Project GetProject()
@@ -83,6 +97,36 @@ namespace Avans_DevOps.Sprints
         public void UploadReview(User user, byte[] review)
         {
             _sprintState.UploadReview(user, review);
+        }
+
+        public void AddSubscriber(User user)
+        {
+            _notificationService.AddSubscriber(user);
+        }
+
+        public void RemoveSubscriber(User user)
+        {
+            _notificationService.RemoveSubscriber(user);
+        }
+
+        public void UpdateProductOwner(string text)
+        {
+            _notificationService.SendProductOwnerUpdate(text);
+        }
+
+        public void UpdateScrumMaster(string text)
+        {
+            _notificationService.SendScrumMasterUpdate(text);
+        }
+
+        public void UpdateSprint(string text)
+        {
+            _notificationService.SendSprintUpdate(text);
+        }
+
+        public void RunPipeline(User user, bool fail)
+        {
+            _sprintState.RunPipeline(user, fail);
         }
     }
 }

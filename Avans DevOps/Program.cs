@@ -82,12 +82,12 @@ var developer1 = new Developer("Developer1");
 //productOwner.AddNotificationPreference(new MailNotificationsService());
 
 // Notificaties voor scrumMaster op gebied van Items en voor Threads
-//scrumMaster.AddNotificationPreference(new MailNotificationsService());
-//developer1.AddNotificationPreference(new MailNotificationsService());
+scrumMaster.AddNotificationPreference(new MailNotificationsService());
+developer1.AddNotificationPreference(new MailNotificationsService());
 
 // Notificaties voor testers wanneer item in ReadyForTesting komt
-//tester.AddNotificationPreference(new SlackNotificationsService());
-//tester.AddNotificationPreference(new MailNotificationsService());
+tester.AddNotificationPreference(new SlackNotificationsService());
+tester.AddNotificationPreference(new MailNotificationsService());
 
 //----------------Notificaties-------------------
 
@@ -100,7 +100,7 @@ var versionControlFactory = serviceProvider.GetService<IVersionControlFactory>()
 var project = new Project("Kramse", productOwner, sprintFactory, VersionControlTypes.Git, versionControlFactory);
 var versionController = project.GetVersionController();
 project.AddTester(tester);
-project.AddDeveloper(developer1);
+project.AddDeveloper(productOwner, developer1);
 project.SetScrumMaster(scrumMaster);
 //----------------Project opzet------------------
 
@@ -116,6 +116,10 @@ var projectBacklog = project.GetBacklog();
 var item1 = projectBacklog[0];
 var item2 = projectBacklog[1];
 var item3 = projectBacklog[2];
+
+item1.AddSubscriber(tester);
+
+item1.ToReadyForTestingState();
 //----------------Sprint opzet-------------------
 
 

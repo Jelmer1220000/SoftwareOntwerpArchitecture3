@@ -1,4 +1,4 @@
-﻿using Avans_DevOps.Rapport.RapportFactory;
+using Avans_DevOps.Rapport.RapportFactory;
 using Avans_DevOps.Sprints.SprintFactory;
 using Avans_DevOps.VersionControl.Factory;
 using Microsoft.Extensions.DependencyInjection;
