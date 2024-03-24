@@ -10,5 +10,20 @@
         {
             return true;
         }
+
+        public override bool CanManagePipeline()
+        {
+            return true;
+        }
+
+        public override void ScrumMasterUpdate(string text)
+        {
+            base.Update(text);
+        }
+
+        public override void SprintUpdate(string text)
+        {
+            base.Update(text);
+        }
     }
 }

@@ -1,15 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Avans_DevOps.Models.UserRoles
+﻿namespace Avans_DevOps.Models.UserRoles
 {
     public class ProductOwner : User
     {
         public ProductOwner(string name) : base(name)
         {
+        }
+
+        public void SprintUpdates(string text)
+        {
+            base.Update(text);
+        }
+
+        public override void ProductOwnerUpdate(string text)
+        {
+            base.Update(text);
         }
     }
 }

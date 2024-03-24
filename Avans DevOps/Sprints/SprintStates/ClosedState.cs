@@ -1,5 +1,6 @@
 ﻿using Avans_DevOps.Items;
 using Avans_DevOps.Notifications;
+using Avans_DevOps.Sprints;
 
 namespace Avans_DevOps.Sprints.SprintStates
 {
@@ -7,14 +8,10 @@ namespace Avans_DevOps.Sprints.SprintStates
     {
 
         private readonly Sprint _context;
-        private NotificationSubject _notificationSubject = new NotificationSubject();
 
         public ClosedState(Sprint sprint)
         {
             _context = sprint;
-
-            _notificationSubject.AddSubscriber(_context.GetProject().GetScrumMaster());
-            _notificationSubject.AddSubscriber(_context.GetProject().GetProductOwner());
         }
 
 
@@ -22,7 +19,7 @@ namespace Avans_DevOps.Sprints.SprintStates
         {
             Console.WriteLine("Sprint closed");
             foreach (var item in _context._sprintBackLog) if (item.Thread != null) item.ArchiveThread();
-            _notificationSubject.SendNotifications($"Sprint: '{_context.Name}' is closed");
+            _context.UpdateSprint($"Sprint: '{_context.Name}' is closed");
         }
     }
 }

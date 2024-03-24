@@ -21,7 +21,7 @@ namespace Avans_DevOps.Sprints
 
         public override void NextSprintState()
         {
-            this._sprintState.NextState();
+            _sprintState.NextState();
         }
     }
 }

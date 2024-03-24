@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Avans_DevOps.Models.UserRoles
+﻿namespace Avans_DevOps.Models.UserRoles
 {
     public class Developer : User
     {
         public Developer(string name) : base(name)
         {
+        }
+
+        public override void ItemUpdate(string text)
+        {
+            base.Update(text);
         }
     }
 }

@@ -15,6 +15,7 @@ namespace Avans_DevOps.Models
         public string _Name;
         private readonly ProductOwner _productOwner;
         private ScrumMaster? _scrumMaster;
+        private LeadDeveloper _leadDeveloper;
         private IList<Developer> _developers;
         private IList<Tester> _testers;
         private IList<Sprint> _sprints;
@@ -48,6 +49,16 @@ namespace Avans_DevOps.Models
             _projectBacklog.Add(item);
         }
 
+        public void SetLeadDeveloper(LeadDeveloper developer)
+        {
+            _leadDeveloper = developer;
+        }
+
+        public LeadDeveloper GetLeadDeveloper()
+        {
+            return this._leadDeveloper;
+        }
+
         public AForum GetForum()
         {
             return this._forum;
@@ -63,9 +74,14 @@ namespace Avans_DevOps.Models
             return _versionControl;
         }
 
-        public void AddDeveloper(Developer developer)
+        public void AddDeveloper(ProductOwner owner, Developer userToAdd)
         {
-            _developers.Add(developer);
+            if (owner != null) _developers.Add(userToAdd);
+        }
+
+        public IList<Developer> GetDevelopers()
+        {
+            return this._developers;
         }
 
         public void AddTester(Tester tester)

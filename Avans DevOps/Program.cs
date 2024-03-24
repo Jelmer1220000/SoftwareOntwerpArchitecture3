@@ -1,4 +1,4 @@
-﻿using Avans_DevOps;
+using Avans_DevOps;
 using Avans_DevOps.Forums;
 using Avans_DevOps.Models;
 using Avans_DevOps.Models.UserRoles;
@@ -14,6 +14,8 @@ using Avans_DevOps.Pipelines.PipelineComponents;
 using Avans_DevOps.Pipelines.PipelineComponents.AnalyseComponents.SonarQubeActions;
 using Avans_DevOps.Pipelines.PipelineComponents.PackageComponents;
 using Avans_DevOps.Pipelines.PipelineComponents.UtilityComponents;
+using Avans_DevOps.Rapport.Document.Parts;
+using Avans_DevOps.Rapport.RapportFactory;
 using Avans_DevOps.Sprints.SprintFactory;
 using Avans_DevOps.VersionControl;
 using Avans_DevOps.VersionControl.Factory;
@@ -80,12 +82,12 @@ var developer1 = new Developer("Developer1");
 //productOwner.AddNotificationPreference(new MailNotificationsService());
 
 // Notificaties voor scrumMaster op gebied van Items en voor Threads
-//scrumMaster.AddNotificationPreference(new MailNotificationsService());
-//developer1.AddNotificationPreference(new MailNotificationsService());
+scrumMaster.AddNotificationPreference(new MailNotificationsService());
+developer1.AddNotificationPreference(new MailNotificationsService());
 
 // Notificaties voor testers wanneer item in ReadyForTesting komt
-//tester.AddNotificationPreference(new SlackNotificationsService());
-//tester.AddNotificationPreference(new MailNotificationsService());
+tester.AddNotificationPreference(new SlackNotificationsService());
+tester.AddNotificationPreference(new MailNotificationsService());
 
 //----------------Notificaties-------------------
 
@@ -98,7 +100,7 @@ var versionControlFactory = serviceProvider.GetService<IVersionControlFactory>()
 var project = new Project("Kramse", productOwner, sprintFactory, VersionControlTypes.Git, versionControlFactory);
 var versionController = project.GetVersionController();
 project.AddTester(tester);
-project.AddDeveloper(developer1);
+project.AddDeveloper(productOwner, developer1);
 project.SetScrumMaster(scrumMaster);
 //----------------Project opzet------------------
 
@@ -114,6 +116,10 @@ var projectBacklog = project.GetBacklog();
 var item1 = projectBacklog[0];
 var item2 = projectBacklog[1];
 var item3 = projectBacklog[2];
+
+item1.AddSubscriber(tester);
+
+item1.ToReadyForTestingState();
 //----------------Sprint opzet-------------------
 
 
@@ -142,13 +148,13 @@ thread2.ReactOnComment(comment2, reaction2);
 //------------------Threads----------------------
 
 //------------------Activities-------------------
-Activity activity = new Activity();
+Activity activity = new Activity("Subtaak", "Doe iets");
 item1.AddActivity(activity);
 //------------------Activities-------------------
 
 //--------------------Items----------------------
-sprint1.AddItemToSprintBacklog(item1, true);
-sprint1.AddItemToSprintBacklog(item2, false);
+sprint1.AddItemToSprintBacklog(item1, 3, true);
+sprint1.AddItemToSprintBacklog(item2, 2, false);
 //--------------------Items----------------------
 
 
@@ -178,9 +184,13 @@ item1.ToDoneState();
 sprint1.NextSprintState();
 sprint1.NextSprintState();
 
+var rapportFactory = serviceProvider.GetService<IRapportFactory>();
 var sevenItems = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 };
 sprint1.UploadReview(scrumMaster, sevenItems);
 //-------------------Sprint----------------------
+
+
+
 
 //----------------Thread test--------------------
 foreach (var Thread in forum.GetAllThreads())
@@ -189,3 +199,13 @@ foreach (var Thread in forum.GetAllThreads())
 }
 //----------------Thread test--------------------
 
+
+//----------------Rapport test-------------------
+var footer = new Footer("<>< Fish", "Progres rapport", "Kramse", "1.0", new DateOnly(2024, 1, 24));
+var header = new Header("<>< Fish", "Progres rapport", "Kramse", "1.0", new DateOnly(2024, 1, 24));
+var body = new Body();
+body.AddSprint(sprint1);
+
+var PDFDoc = rapportFactory.CreateRapport(footer, header, body, Avans_DevOps.Rapport.Document.Document.RapportTypes.PDF);
+Console.WriteLine(PDFDoc);
+//----------------Rapport test-------------------

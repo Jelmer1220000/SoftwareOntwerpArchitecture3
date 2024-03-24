@@ -3,10 +3,10 @@ using Avans_DevOps.Notifications.NotificationServices;
 
 namespace Avans_DevOps.Models
 {
-    public abstract class User : ISubscriber
+    public abstract class User : Subscriber
     {
         private string Name { get; set; } = "";
-        private IList<INotificationService<string>> _preferences;
+        public IList<INotificationService<string>> _preferences;
 
         public User(string name) 
         {
@@ -56,6 +56,11 @@ namespace Avans_DevOps.Models
         {
             Console.WriteLine("ERROR: Je hebt geen toestemming om een sprint te cancellen.");
             return false;
+        }
+
+        public override void ThreadUpdate(string text)
+        {
+            Update(text);
         }
     }
 }

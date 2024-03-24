@@ -4,7 +4,7 @@ namespace Avans_DevOps.Notifications
 {
     public class NotificationSubject : ISubject
     {
-        private IList<ISubscriber> _subscribers = [];
+        private IList<Subscriber> _subscribers = [];
 
         public void AddSubscriber(User member)
         {
@@ -16,12 +16,34 @@ namespace Avans_DevOps.Notifications
             _subscribers.Remove(member);
         }
 
-        public void SendNotifications(string text)
+        public void SendItemUpdate(string text)
         {
-            foreach (var member in _subscribers)
-            {
-                member.Update(text);
-            }
+            foreach(var member in _subscribers) member.ItemUpdate(text);
+        }
+
+        public void SendThreadUpdate(string text)
+        {
+            foreach (var member in _subscribers) member.ThreadUpdate(text);
+        }
+
+        public void SendSprintUpdate(string text)
+        {
+            foreach (var member in _subscribers) member.SprintUpdate(text);
+        }
+
+        public void SendProductOwnerUpdate(string text)
+        {
+            foreach (var member in _subscribers) member.ProductOwnerUpdate(text);
+        }
+
+        public void SendScrumMasterUpdate(string text)
+        {
+            foreach (var member in _subscribers) member.ScrumMasterUpdate(text);
+        }
+
+        public void SendTestersUpdate(string text)
+        {
+            foreach (var member in _subscribers) member.TestersUpdate(text);
         }
     }
 }

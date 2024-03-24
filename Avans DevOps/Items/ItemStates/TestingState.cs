@@ -12,21 +12,18 @@ namespace Avans_DevOps.Items.ItemStates
     public class TestingState : ItemState
     {
         private readonly Item _context;
-        private NotificationSubject _notificationSubject = new NotificationSubject();
 
         public TestingState(Item context)
         {
             _context = context;
 
-            _notificationSubject.AddSubscriber(_context.GetScrumMaster());
             this.OnEnter(_context);
         }
 
         public override void ToTodo()
         {
-            _context.ToTodoState();
-
-            _notificationSubject.SendNotifications($"{_context.Name} is back to TODO");
+           _context.UpdateScrumMaster($"{_context.Name} is back to TODO");
+           _context.ToTodoState();
         }
 
         public override void StartThread(string title, string description, User user)
