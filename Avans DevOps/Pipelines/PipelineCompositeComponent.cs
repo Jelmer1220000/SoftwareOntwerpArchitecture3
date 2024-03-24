@@ -28,10 +28,5 @@ namespace Avans_DevOps.Pipelines
         {
             _pipelineComponents.Add(component);
         }
-
-        public void RemoveComponent(PipelineComponent component)
-        {
-            _pipelineComponents.Remove(component);
-        }
     }
 }

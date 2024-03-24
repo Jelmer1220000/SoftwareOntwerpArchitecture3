@@ -17,11 +17,6 @@
             Threads.Add(thread);
         }
 
-        public void Remove(AThread thread)
-        {
-            Threads.Remove(thread);
-        }
-
         public IList<AThread> GetAllThreads()
         {
             return Threads.ToList();

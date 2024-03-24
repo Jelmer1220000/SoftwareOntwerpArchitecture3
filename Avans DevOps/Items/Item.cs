@@ -10,7 +10,7 @@ namespace Avans_DevOps.Items
     {
         public ItemState _itemState { get; set; }
 
-        private Project _project;
+        public Project Project;
         public Guid Id { get; set; }
         public string Name { get; set; }
         public int StoryPoints { get; set; }
@@ -48,11 +48,6 @@ namespace Avans_DevOps.Items
             _notificationSubject = notificationService;
         }
 
-        public Project GetProject()
-        {
-            return _project;
-        }
-
         public void StartThread(string title, string description, User user)
         {
             _itemState.StartThread(title, description, user);
@@ -60,7 +55,7 @@ namespace Avans_DevOps.Items
 
         public IList<Tester> GetTesters()
         {
-            return GetProject().GetTesters();
+            return Project.GetTesters();
         }
         //Thread functies
         public void CloseThread()
@@ -101,7 +96,7 @@ namespace Avans_DevOps.Items
 
         public User GetScrumMaster()
         {
-            return GetProject().GetScrumMaster();
+            return Project.GetScrumMaster();
         }
 
         public void AddActivity(Activity activity)

@@ -34,7 +34,6 @@ namespace Avans_Devops_Tests
         {
             //Arrange
             var productOwner = new ProductOwner("Jelmer");
-            var developer = new Developer("Quincy");
             var preference = new SlackNotificationsService();
             var preference2 = new MailNotificationsService();
             //Act

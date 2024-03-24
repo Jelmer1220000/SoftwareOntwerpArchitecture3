@@ -114,8 +114,10 @@ namespace Avans_Devops_Tests
             //Source
             var source = new SourceContainer("SourceContainer");
             var azureSource = new SourceAzure("SourceAzure");
+            var githubSource = new SourceGithub("githubSource");
             source.AddComponent(azureSource);
             pipeline.AddComponent(source);
+            source.AddComponent(githubSource);
             //Package
             var package = new Package("Package");
             pipeline.AddComponent(package);
@@ -123,13 +125,17 @@ namespace Avans_Devops_Tests
             var build = new BuildContainer("BuildContainer");
             var mavenBuild = new BuildMaven("BuildMaven");
             var jenkinsBuild = new BuildJenkins("BuildJenkins");
+            var buildAnt = new BuildAnt("ant");
             build.AddComponent(jenkinsBuild);
             build.AddComponent(mavenBuild);
+            build.AddComponent(buildAnt);
             pipeline.AddComponent(build);
             //Testing
             var testContainer = new TestContainer("TestContainer");
             var seleniumTest = new SeleniumTests("SeleniumTests");
+            var nUnitTest = new NUnitTests("Nunit");
             testContainer.AddComponent(seleniumTest);
+            testContainer.AddComponent(nUnitTest);
             pipeline.AddComponent(testContainer);
             //Analyse
             var analyseContainer = new AnalyseContainer("analyseContainer");

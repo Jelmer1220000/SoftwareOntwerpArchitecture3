@@ -83,6 +83,33 @@ namespace Avans_Devops_Tests
             Assert.NotEmpty(Item.Thread.Comments[0].Comments);
         }
 
+        [Fact]
+        public void Thread_kan_aangemaakt_en_gesloten_worden()
+        {
+            //Arrange
+            var versionControlFactory = new Mock<IVersionControlFactory>();
+            var sprintFactory = new Mock<ISprintFactory>();
+            var productOwner = new ProductOwner("Jelmer");
+            var developer = new Developer("Quincy");
+            var developer2 = new Developer("Jelmero");
+            //Act
+            var project = new Project("Kramse", productOwner, sprintFactory.Object, VersionControlTypes.Git, versionControlFactory.Object);
+
+            var Item = new Item("Item1", "Beschrijving", project, project.GetForum());
+
+            var Comment = new Comment(developer, "Reactie1");
+            var Comment2 = new Comment(developer2, "comment op comment");
+
+            Item.StartThread("Nieuwe Thread", "Beschrijving", developer);
+            Item.Thread.ArchiveThread();
+            Item.Thread.OpenThread();
+
+            //Assert
+            Assert.NotEmpty(Item.Thread.Comments);
+            Assert.NotEmpty(Item.Thread.Comments[0].Comments);
+        }
+    }
+
 
     }
 }
