@@ -34,10 +34,6 @@
                 _localRepository[branchName] = new List<string>();
                 Console.WriteLine($"GIT: Created new branch '{branchName}' in local repository.");
             }
-            else
-            {
-                throw new InvalidOperationException($"GIT: Branch '{branchName}' already exists in the local repository.");
-            }
         }
 
         //Commit code changes naar huidige branch

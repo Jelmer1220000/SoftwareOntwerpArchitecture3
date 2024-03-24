@@ -14,6 +14,7 @@ using Avans_DevOps.VersionControl;
 using Avans_DevOps.Sprints;
 using Avans_DevOps.Notifications;
 using Avans_DevOps.Visitor;
+using Avans_DevOps.Sprints.SprintStates;
 
 namespace Avans_Devops_Tests
 {
@@ -32,8 +33,14 @@ namespace Avans_Devops_Tests
             var dateEnd = DateOnly.Parse("24-03-2024");
             var project = new Project("Kramse", productOwner, sprintFactory.Object, VersionControlTypes.Git, versionControlFactory.Object);
             var sprint = new ReleaseSprint("ReleaseTest", dateStart, dateEnd, project, pipeline, project.GetVersionController(), scrumMaster, project.GetForum());
+            var sprint2 = new ReviewSprint("ReviewSprint", dateStart, dateEnd, project, pipeline, project.GetVersionController(), scrumMaster, project.GetForum());
 
             //Act
+            sprint.InjectNotificationService(new NotificationSubject());
+            sprint.ChangeState(new PlanningState(sprint));
+            sprint.ChangeProperties("ReleaseSprint", dateStart, dateEnd);
+            sprint.GetProject();
+
             sprintFactory.Setup(s => s.CreateSprint(SprintType.ReleaseSprint, It.IsAny<string>(), It.IsAny<DateOnly>(), It.IsAny<DateOnly>(), project, pipeline, It.IsAny<IVersionControl>(), It.IsAny<ScrumMaster>(), project.GetForum())).Returns(sprint);
             project.CreateSprint(SprintType.ReleaseSprint, "ReleaseTest", dateStart, dateEnd, pipeline, project.GetForum());
             project.SetScrumMaster(scrumMaster);
@@ -94,7 +101,6 @@ namespace Avans_Devops_Tests
             sprint.NextSprintState();
             project.AddItemToProjectBackLog("Item1", "Test item");
             var item = project.GetBacklog()[0];
-
             var exception = Assert.Throws<InvalidOperationException>(() => sprint.AddItemToSprintBacklog(item, 5, false));
             //Assert
 

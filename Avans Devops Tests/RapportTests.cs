@@ -47,13 +47,9 @@ namespace Avans_Devops_Tests
         {
             //Arrange
             var gitStrategy = new GitStrategy();
-            var sprintFactory = new Mock<ISprintFactory>();
-            var pipeline = new Pipeline("Pipeline1");
-            var productOwner = new ProductOwner("Jelmer");
-            var scrumMaster = new ScrumMaster("Quincy");
-            var dateStart = DateOnly.Parse("23-03-2024");
-            var dateEnd = DateOnly.Parse("24-03-2024");
 
+            //Act
+            gitStrategy.Branch("New branch");
             gitStrategy.Branch("New branch");
             gitStrategy.Pull("New branch");
             gitStrategy.Branch("Second branch");
