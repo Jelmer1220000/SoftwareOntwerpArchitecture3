@@ -67,5 +67,11 @@ namespace Avans_Devops_Tests
             //Assert
             notifications.Verify(s => s.SendTestersUpdate(It.IsAny<string>()), Times.Once);
         }
+
+        [Fact]
+        public void Test_Mail_notification_service()
+        {
+
+        }
     }
 }
