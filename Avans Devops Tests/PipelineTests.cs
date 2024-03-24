@@ -20,6 +20,10 @@ using Avans_DevOps.Pipelines;
 using Avans_DevOps.Pipelines.PipelineComponents.UtilityComponents;
 using Avans_DevOps.Pipelines.PipelineComponents.AnalyseComponents.SonarQubeActions;
 using Avans_DevOps.Pipelines.PipelineActions.DeployComponents;
+using Avans_DevOps.Pipelines.PipelineActions.BuildComponents;
+using Avans_DevOps.Pipelines.PipelineActions.TestActions;
+using Avans_DevOps.Pipelines.PipelineActions.TestComponents;
+using Avans_DevOps.Pipelines.PipelineComponents.PackageComponents;
 
 namespace Avans_Devops_Tests
 {
@@ -88,14 +92,81 @@ namespace Avans_Devops_Tests
             var pipeline = new Pipeline("Pipeline 1");
             var deployContainer = new DeployContainer("container");
             var deployAzure = new DeployAzure("azure");
+            var pipelineVisitor = new Mock<IPipelineVisitor>();
 
             //Act
             pipeline.AddComponent(deployContainer);
             deployContainer.AddComponent(deployAzure);
-            var pipelineVisitor = new Mock<IPipelineVisitor>();
             pipeline.AcceptVisitor(pipelineVisitor.Object);
             //Assert
             pipelineVisitor.Verify(x => x.Visit(It.IsAny<DeployAzure>()), Times.AtLeastOnce);
+        }
+
+        [Fact]
+        public void can_run_full_pipeline()
+        {
+            //Arrange
+            var pipelineVisitor = new Mock<IPipelineVisitor>();
+            var pipeline = new Pipeline("Pipeline");
+
+                //Act
+
+            //Source
+            var source = new SourceContainer("SourceContainer");
+            var azureSource = new SourceAzure("SourceAzure");
+            source.AddComponent(azureSource);
+            pipeline.AddComponent(source);
+            //Package
+            var package = new Package("Package");
+            pipeline.AddComponent(package);
+            //Build
+            var build = new BuildContainer("BuildContainer");
+            var mavenBuild = new BuildMaven("BuildMaven");
+            var jenkinsBuild = new BuildJenkins("BuildJenkins");
+            build.AddComponent(jenkinsBuild);
+            build.AddComponent(mavenBuild);
+            pipeline.AddComponent(build);
+            //Testing
+            var testContainer = new TestContainer("TestContainer");
+            var seleniumTest = new SeleniumTests("SeleniumTests");
+            testContainer.AddComponent(seleniumTest);
+            pipeline.AddComponent(testContainer);
+            //Analyse
+            var analyseContainer = new AnalyseContainer("analyseContainer");
+            var sonarQube = new AnalyseSonarQube("SonarQube");
+            var sonarQubeExe = new SonarQubeExecute("SonarQube exe");
+            var sonarQubeReport = new SonarQubeReporting("SonarQubeReport");
+            analyseContainer.AddComponent(sonarQube);
+            sonarQube.AddComponent(sonarQubeExe);
+            sonarQube.AddComponent(sonarQubeReport);
+            pipeline.AddComponent(analyseContainer);
+
+            //Deploy
+            var deployContainer = new DeployContainer("deploy");
+            var deployAzure = new DeployAzure("azure");
+            var deployAWS = new DeployAWS("aws");
+            pipeline.AddComponent(deployContainer);
+            deployContainer.AddComponent(deployAzure);
+            deployContainer.AddComponent(deployAWS);
+
+            // Utility
+            var utility = new Utility("Utility");
+            var commando = new Action(() => Console.WriteLine("Doing something after"));
+            var commando2 = new Action(() => Console.WriteLine("Doing something after 2"));
+            var commando3 = new Action(() => Console.WriteLine("Doing something after 3"));
+            utility.AddAction(commando);
+            utility.AddAction(commando2);
+            utility.AddAction(commando3);
+            pipeline.AddComponent(utility);
+
+            //Assert
+            pipeline.AcceptVisitor(pipelineVisitor.Object);
+            pipelineVisitor.Verify(x => x.Visit(It.IsAny<DeployAzure>()), Times.AtLeastOnce);
+            pipelineVisitor.Verify(x => x.Visit(It.IsAny<Utility>()), Times.AtLeastOnce);
+            pipelineVisitor.Verify(x => x.Visit(It.IsAny<SonarQubeReporting>()), Times.AtLeastOnce);
+            pipelineVisitor.Verify(x => x.Visit(It.IsAny<BuildJenkins>()), Times.AtLeastOnce);
+            pipelineVisitor.Verify(x => x.Visit(It.IsAny<Package>()), Times.AtLeastOnce);
+            pipelineVisitor.Verify(x => x.Visit(It.IsAny<Pipeline>()), Times.AtLeastOnce);
         }
     }
 }
