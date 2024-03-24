@@ -46,8 +46,7 @@ namespace Avans_Devops_Tests
             project.SetScrumMaster(scrumMaster);
 
             //Assert
-            Console.WriteLine(project.GetSprintByName("ReleaseTest"));
-            Assert.NotNull(project.GetSprintByName("ReleaseTest"));
+            Assert.NotNull(project.GetSprintByName("ReleaseSprint"));
             Assert.Equal(dateStart, project.GetSprintByName("ReleaseTest")!.StartDate);
             Assert.Equal(dateEnd, project.GetSprintByName("ReleaseTest")!.EndDate);
             Assert.Equal("ReleaseTest", project.GetSprintByName("ReleaseTest")!.Name);
