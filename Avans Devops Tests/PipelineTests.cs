@@ -176,7 +176,7 @@ namespace Avans_Devops_Tests
         }
 
         [Fact]
-        public void can_run_full_pipelinevisitor()
+        public void can_run_full_pipelinevisitor_methods()
         {
             //Arrange
             var pipelineVisitor = new PipelineVisitor();
@@ -237,6 +237,7 @@ namespace Avans_Devops_Tests
             utility.AddAction(commando2);
             utility.AddAction(commando3);
             pipeline.AddComponent(utility);
+
 
             //Assert
             pipeline.AcceptVisitor(pipelineVisitor);

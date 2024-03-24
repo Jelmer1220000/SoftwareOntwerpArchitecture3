@@ -35,13 +35,7 @@ namespace Avans_DevOps.Items
         }
         public void SetStoryPoints(int points)
         {
-            if (points > 0)
-            {
                 StoryPoints = points;
-            } else
-            {
-                throw new Exception("storypoints kunnen niet negatief zijn");
-            }
         }
         public void InjectNotificationsService(ISubject notificationService)
         {
@@ -53,10 +47,6 @@ namespace Avans_DevOps.Items
             _itemState.StartThread(title, description, user);
         }
 
-        public IList<Tester> GetTesters()
-        {
-            return Project.GetTesters();
-        }
         //Thread functies
         public void CloseThread()
         {
@@ -94,19 +84,9 @@ namespace Avans_DevOps.Items
             _notificationSubject.SendScrumMasterUpdate(text);
         }
 
-        public User GetScrumMaster()
-        {
-            return Project.GetScrumMaster();
-        }
-
         public void AddActivity(Activity activity)
         {
             Activities.Add(activity);
-        }
-
-        public void RemoveActivity(Activity activity)
-        {
-            Activities.Remove(activity);
         }
 
         //Veranderd de state van de huidige context naar aangegeven context.

@@ -261,6 +261,8 @@ namespace Avans_Devops_Tests
             var dateEnd = DateOnly.Parse("24-03-2024");
             var project = new Project("Kramse", productOwner, sprintFactory.Object, VersionControlTypes.Git, versionControlFactory.Object);
             var sprint = new ReleaseSprint("ReleaseTest", dateStart, dateEnd, project, pipeline, project.GetVersionController(), scrumMaster, project.GetForum());
+            
+            
             //Act
             sprintFactory.Setup(s => s.CreateSprint(SprintType.ReleaseSprint, It.IsAny<string>(), It.IsAny<DateOnly>(), It.IsAny<DateOnly>(), project, pipeline, It.IsAny<IVersionControl>(), It.IsAny<ScrumMaster>(), project.GetForum())).Returns(sprint);
 

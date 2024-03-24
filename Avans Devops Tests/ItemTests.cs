@@ -145,7 +145,7 @@ namespace Avans_Devops_Tests
             var sprintFactory = new Mock<ISprintFactory>();
             var productOwner = new ProductOwner("Jelmer");
             var leaddeveloper = new LeadDeveloper("Quincy");
-            ;
+          
             //Act
             var project = new Project("Kramse", productOwner, sprintFactory.Object, VersionControlTypes.Git, versionControlFactory.Object);
             project.SetLeadDeveloper(leaddeveloper);
@@ -157,6 +157,5 @@ namespace Avans_Devops_Tests
             //Assert
             Assert.IsType<DoneState>(item1._itemState);
         }
-
     }
 }

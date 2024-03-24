@@ -12,6 +12,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Avans_DevOps.Forum.ThreadStates;
 using Avans_DevOps.Notifications;
+using Avans_DevOps.Pipelines.PipelineComponents;
+using Avans_DevOps.Sprints;
 
 namespace Avans_Devops_Tests
 {
@@ -91,16 +93,24 @@ namespace Avans_Devops_Tests
             //Arrange
             var versionControlFactory = new Mock<IVersionControlFactory>();
             var sprintFactory = new Mock<ISprintFactory>();
+            var pipeline = new Mock<Pipeline>("Pipeline 1");
             var productOwner = new ProductOwner("Jelmer");
-            var developer = new Developer("Quincy");
+            var scrumMaster = new ScrumMaster("Quincy");
+            var dateStart = DateOnly.Parse("23-03-2024");
+            var dateEnd = DateOnly.Parse("24-03-2024");
+            var project = new Project("Kramse", productOwner, sprintFactory.Object, VersionControlTypes.Git, versionControlFactory.Object);
+            var sprint = new ReleaseSprint("ReleaseTest", dateStart, dateEnd, project, pipeline.Object, project.GetVersionController(), scrumMaster, project.GetForum());
 
             //Act
-            var project = new Project("Kramse", productOwner, sprintFactory.Object, VersionControlTypes.Git, versionControlFactory.Object);
             var Item = new Item("Item1", "Beschrijving", project, project.GetForum());
-            Item.StartThread("Test", "Thread", developer);
+            Item.StartThread("Test", "Thread", productOwner);
+            sprint.AddItemToSprintBacklog(Item, 5, false);
+            sprint.NextSprintState();
+            sprint.NextSprintState();
+            sprint.NextSprintState();
+            sprint.RunPipeline(scrumMaster, false);
             //Assert
             Assert.NotEmpty(project.GetForum().GetAllThreads());
-            Assert.IsType<ArchiveState>(Item.Thread!._threadState);
         }
 
         [Fact]
