@@ -124,7 +124,7 @@ namespace Avans_DevOps.Items
 
         public void ToDoingState(User user)
         {
-            if (this._user == null) 
+            if (this.User == null) 
             {
                 this.User = user;
             }
