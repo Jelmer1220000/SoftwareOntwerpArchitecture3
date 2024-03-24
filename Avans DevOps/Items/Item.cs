@@ -29,7 +29,7 @@ namespace Avans_DevOps.Items
             Description = description;
             this._itemState = new TodoState(this);
             Activities = [];
-            _project = project;
+            Project = project;
             Forum = forum;
             _notificationSubject = new NotificationSubject();
         }
