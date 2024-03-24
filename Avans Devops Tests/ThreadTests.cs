@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Avans_DevOps.Forum.ThreadStates;
+using Avans_DevOps.Notifications;
 
 namespace Avans_Devops_Tests
 {
@@ -85,6 +86,44 @@ namespace Avans_Devops_Tests
         }
 
         [Fact]
+        public void Get_All_Threads()
+        {
+            //Arrange
+            var versionControlFactory = new Mock<IVersionControlFactory>();
+            var sprintFactory = new Mock<ISprintFactory>();
+            var productOwner = new ProductOwner("Jelmer");
+            var developer = new Developer("Quincy");
+
+            //Act
+            var project = new Project("Kramse", productOwner, sprintFactory.Object, VersionControlTypes.Git, versionControlFactory.Object);
+            var Item = new Item("Item1", "Beschrijving", project, project.GetForum());
+            Item.StartThread("Test", "Thread", developer);
+            //Assert
+            Assert.NotEmpty(project.GetForum().GetAllThreads());
+            Assert.IsType<ArchiveState>(Item.Thread!._threadState);
+        }
+
+        [Fact]
+        public void Notificationservice_bestaat_in_threads_voor_notificaties()
+        {
+            //Arrange
+            var versionControlFactory = new Mock<IVersionControlFactory>();
+            var sprintFactory = new Mock<ISprintFactory>();
+            var productOwner = new ProductOwner("Jelmer");
+            var developer = new Developer("Quincy");
+            ISubject notificationSubject = new NotificationSubject();
+
+            //Act
+            var project = new Project("Kramse", productOwner, sprintFactory.Object, VersionControlTypes.Git, versionControlFactory.Object);
+            var Item = new Item("Item1", "Beschrijving", project, project.GetForum());
+            Item.StartThread("Test", "Thread", developer);
+
+            Item.Thread.InjectNotificationService(notificationSubject);
+            //Assert
+            Assert.NotNull(Item.Thread._notificationService);
+        }
+
+        [Fact]
         public void Thread_kan_gearchived_worden_zodra_sprint_sluit()
         {
             //Arrange
@@ -99,7 +138,9 @@ namespace Avans_Devops_Tests
             var Item = new Item("Item1", "Beschrijving", project, project.GetForum());
             Item.StartThread("Test", "Thread", developer);
             Item.ArchiveThread();
-
+            Item.CloseThread();
+            Item.OpenThread();
+            Item.ArchiveThread();
             //Assert
             Assert.IsType<ArchiveState>(Item.Thread!._threadState);
         }

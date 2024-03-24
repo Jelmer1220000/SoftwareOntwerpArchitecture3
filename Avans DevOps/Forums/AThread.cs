@@ -15,7 +15,7 @@ namespace Avans_DevOps.Forums
         public IList<Comment> Comments;
         public User User;
         private AForum _forum;
-        private ISubject _notificationService;
+        public ISubject _notificationService;
 
         public AThread(string title, string description, Item backlogItem, AForum forum, User user)
         {
