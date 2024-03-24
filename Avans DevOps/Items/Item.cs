@@ -89,6 +89,7 @@ namespace Avans_DevOps.Items
             _notificationSubject.SendTestersUpdate(text);
         }
 
+
         public void UpdateScrumMaster(string text)
         {
             _notificationSubject.SendScrumMasterUpdate(text);
